@@ -1,4 +1,5 @@
 package com.customermanagment.sims.service.inventory;
+
 import com.customermanagment.sims.model.tables.product.Brand;
 import com.customermanagment.sims.model.tables.product.Product;
 import com.customermanagment.sims.repository.order.OrderProductRepository;
@@ -7,6 +8,7 @@ import com.customermanagment.sims.repository.product.BrandRepository;
 import com.customermanagment.sims.repository.product.ProductRepository;
 import com.customermanagment.sims.utility.Utility;
 import org.springframework.stereotype.Service;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +23,13 @@ import java.util.List;
 public class InventoryServiceImplementation implements InventoryService {
 
     Utility utility = new Utility();
+
     final BrandRepository brandRepository;
+
     final ProductRepository productRepository;
+
     final OrderRepository orderRepository;
+
     final OrderProductRepository orderProductRepository;
 
     /**
@@ -136,6 +142,7 @@ public class InventoryServiceImplementation implements InventoryService {
     @Override
     public List<Product> getProductsByBrandId(long brandId) {
         List<Product> productList = new ArrayList<>();
+
         for(Product p : productRepository.findAll())
             {
                 if(p.getBrand() == brandId)
@@ -143,6 +150,7 @@ public class InventoryServiceImplementation implements InventoryService {
                     productList.add(p);
                 }
             }
+
         return productList;
     }
 
@@ -153,11 +161,13 @@ public class InventoryServiceImplementation implements InventoryService {
     @Override
     public List<Product> getAvailableProducts() {
         List<Product> availableProducts = new ArrayList<>();
+
         for(Product product : productRepository.findAll()) {
             if(product.getAmount() > 0) {
                     availableProducts.add(product);
             }
         }
+
         return availableProducts;
     }
 
@@ -169,6 +179,7 @@ public class InventoryServiceImplementation implements InventoryService {
     public String calculateInventoryValue() {
         List<Product> allProducts = productRepository.findAll();
         int totalValue = 0;
+
         for(Product product : allProducts)
         {
             for(int i = 0; i < product.getAmount(); i++)
@@ -176,6 +187,7 @@ public class InventoryServiceImplementation implements InventoryService {
                 totalValue = totalValue + product.getPrice();
             }
         }
+
         DecimalFormat decimalFormat = new DecimalFormat("###,###.###");
         String formattedTotalPrice = decimalFormat.format(totalValue);
 
@@ -191,6 +203,7 @@ public class InventoryServiceImplementation implements InventoryService {
     public String calculateInventoryValueByBrandId(long brandId) {
         List<Product> allProducts = getProductsByBrandId(brandId);
         int totalBrandValue = 0;
+
         for(Product product : allProducts)
         {
             for(int i = 0; i < product.getAmount(); i++)
@@ -198,6 +211,7 @@ public class InventoryServiceImplementation implements InventoryService {
                 totalBrandValue = totalBrandValue + product.getPrice();
             }
         }
+
         DecimalFormat decimalFormat = new DecimalFormat("###,###.###");
         String formattedTotalPrice = decimalFormat.format(totalBrandValue);
 

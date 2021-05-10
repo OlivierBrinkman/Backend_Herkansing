@@ -1,18 +1,23 @@
 package com.customermanagment.sims.controller;
+
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 /**
  * Main Controller
  *
- * @author  Olivier Brinkman
+ * @author Olivier Brinkman
  * @version 1.0
- * @since   12/02/2019
+ * @since 12/02/2019
  */
 @Controller
 public class MainController {
+
 
     /**
      * return home page
@@ -21,7 +26,7 @@ public class MainController {
      */
     @GetMapping("/")
     public String index(Model model) {
-       return initializeIndex(model);
+        return initializeIndex(model);
     }
 
     /**
@@ -53,4 +58,6 @@ public class MainController {
     public String loginIndex() {
         return "Login";
     }
+
+
 }

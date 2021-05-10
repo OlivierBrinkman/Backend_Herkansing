@@ -28,51 +28,57 @@ public class CustomerController {
 
     /**
      * return customers
+     *
      * @param model
      * @return
      */
     @GetMapping(value = "/customers")
-    public String indexCustomers(Model model) {
+    public String index(Model model) {
         model.addAttribute("numberOfCustomers", customerService.getAllCustomers().size() + " customers");
-            model.addAttribute("customers", customerService.getAllCustomers());
-            return "customer/Customers";
+        model.addAttribute("customers", customerService.getAllCustomers());
+        return "customer/Customers";
     }
 
     /**
      * navigates to Create page
+     *
      * @param model
      * @return
      */
     @GetMapping(value = "/customers/new")
-    public String newCustomer(Model model) {
-            model.addAttribute("newCustomer", new Customer());
-            model.addAttribute("newCustomerAddress", new CustomerAddress());
-            return "customer/CustomerCreate";
+    public String customerNew(Model model) {
+        model.addAttribute("newCustomer", new Customer());
+        model.addAttribute("newCustomerAddress", new CustomerAddress());
+        return "customer/CustomerCreate";
     }
 
     /**
      * creates Customer
+     *
      * @param customer
      * @param customerAddress
      * @return
      */
     @PostMapping(value = "/customers/new")
-    public String saveCustomer(@ModelAttribute Customer customer, @ModelAttribute CustomerAddress customerAddress){
-            customerService.createCustomer(customer);
-            customerAddress.setCustomerId(customer.getId());
-            customerService.createCustomerAddress(customerAddress);
-            return "redirect:/customers";
+    public String customerCreate(@ModelAttribute Customer customer, @ModelAttribute CustomerAddress customerAddress) {
+        customerService.createCustomer(customer);
+        customerAddress.setCustomerId(customer.getId());
+        customerService.createCustomerAddress(customerAddress);
+        return "redirect:/customers";
     }
 
     /**
      * navigates to Update page
+     *
      * @param customerId
      * @param model
      * @return
      */
     @GetMapping(value = "/customers/edit")
-    public String selectCustomer(@RequestParam(name="customerId")long customerId, Model model) {
-        if(customerId == 0) { return "redirect:/customers"; }
+    public String customerSelect(@RequestParam(name = "customerId") long customerId, Model model) {
+        if (customerId == 0) {
+            return "redirect:/customers";
+        }
         model.addAttribute("selectedCustomer", customerService.getCustomerById(customerId));
         model.addAttribute("selectedCustomerAddress", customerService.getCustomerAddressByCustomerId(customerId));
         return "customer/CustomerUpdate";
@@ -80,16 +86,22 @@ public class CustomerController {
 
     /**
      * edits Customer
+     *
      * @param customer
      * @param customerAddress
      * @param result
      * @param model
      * @return
      */
-    @PostMapping(value = "/customers/edit/{id}", consumes = "application/x-www-form-urlencoded")
-    public String updateCustomer(Customer customer, CustomerAddress customerAddress, BindingResult result, Model model) {
-        if(!model.containsAttribute("selectedCustomer")) {  model.addAttribute("customers", customerService.getAllCustomers()); return "redirect:/customers"; }
-        else { if (result.hasErrors()) { return "redirect:/customers"; } }
+    @PutMapping(value = "/customers/edit/{id}", consumes = "application/x-www-form-urlencoded")
+    public String customerUpdate(Customer customer, CustomerAddress customerAddress, BindingResult result, Model model) {
+        if (!model.containsAttribute("selectedCustomer")) {
+            return "redirect:/customers";
+        } else {
+            if (result.hasErrors()) {
+                return "redirect:/customers";
+            }
+        }
 
         customerService.createCustomer(customer);
         customerService.createCustomerAddress(customerAddress);
@@ -100,12 +112,13 @@ public class CustomerController {
 
     /**
      * deletes Customer
+     *
      * @param customerId
      * @param model
      * @return
      */
-    @RequestMapping(value = "/customers/delete" ,method = RequestMethod.GET)
-    public String deleteCustomer(@RequestParam(name="customerId")long customerId, Model model) {
+    @RequestMapping(value = "/customers/delete", method = RequestMethod.GET)
+    public String customerDelete(@RequestParam(name = "customerId") long customerId, Model model) {
         customerService.deleteCustomer(customerId);
         model.addAttribute(customerService.getAllCustomers());
         return "redirect:/customers";

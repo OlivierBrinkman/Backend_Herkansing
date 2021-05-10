@@ -1,8 +1,8 @@
 package com.customermanagment.sims.controller;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Exception Controller
@@ -22,6 +22,7 @@ public class ExceptionController {
     public String NoPermissions() {
         return "redirect:/";
     }
+
 
     /**
      * 505 exception

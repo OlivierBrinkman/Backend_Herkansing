@@ -49,7 +49,6 @@ public class Utility {
         long C2_Id =customerRepository.save(customer2).getId();
         long C3_Id = customerRepository.save(customer3).getId();
 
-
         //CUSTOMER ADDRESS 1
         CustomerAddress address1 = new CustomerAddress();address1.setCustomerId(C1_Id);address1.setStreet("Applestraat");address1.setNumber("10");address1.setZipcode("1029FG");address1.setCity("Enschede");address1.setCountry("Nederland");
 
@@ -65,18 +64,6 @@ public class Utility {
         customerAddressRepository.save(address3);
     }
 
-    /**
-     * deletes all customers
-     * @param customerRepository
-     * @param customerAddressRepository
-     * @param orderRepository
-     * @param orderProductRepository
-     */
-    public void deleteCustomers(CustomerRepository customerRepository, CustomerAddressRepository customerAddressRepository, OrderRepository orderRepository, OrderProductRepository orderProductRepository) {
-        deleteOrders(orderRepository, orderProductRepository);
-        customerAddressRepository.deleteAll();
-        customerRepository.deleteAll();
-    }
 
     /**
      * creates dummy inventory

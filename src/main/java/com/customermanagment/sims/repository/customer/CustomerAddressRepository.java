@@ -11,4 +11,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface CustomerAddressRepository extends JpaRepository<CustomerAddress, Long> {
+    //CUSTOMER_ADDRESS REPOSITORY
 }

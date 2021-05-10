@@ -10,10 +10,15 @@ public class OrderSummaryStructure {
 
     //ATTRIBUTES
     double totalPrice;
+
     String newInventory;
+
     int amountProducts;
+
     String exVAT;
+
     String VAT;
+
 
     //CONSTRUCTORS
     public OrderSummaryStructure(double totalPrice, String newInventory, int amountProducts, String exVAT, String VAT) {
@@ -23,40 +28,26 @@ public class OrderSummaryStructure {
         this.exVAT = exVAT;
         this.VAT = VAT;
     }
+
     public OrderSummaryStructure() { }
 
     //GETTERS AND SETTERS
-    public String getVAT() {
-        return VAT;
-    }
     public void setVAT(String VAT) {
         this.VAT = VAT;
     }
 
-    public double getTotalPrice() {
-        return totalPrice;
-    }
     public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
     }
 
-    public String getNewInventory() {
-        return newInventory;
-    }
     public void setNewInventory(String newInventory) {
         this.newInventory = newInventory;
     }
 
-    public int getAmountProducts() {
-        return amountProducts;
-    }
     public void setAmountProducts(int amountProducts) {
         this.amountProducts = amountProducts;
     }
 
-    public String getExVAT() {
-        return exVAT;
-    }
     public void setExVAT(String exVAT) {
         this.exVAT = exVAT;
     }

@@ -16,4 +16,5 @@ public class AccessForbidden extends RuntimeException {
     public AccessForbidden() {
         super("You are not authorized to access that resource.");
     }
+
 }

@@ -1,11 +1,12 @@
 package com.customermanagment.sims.service.order;
-import com.customermanagment.sims.model.tables.customer.Customer;
+
 import com.customermanagment.sims.model.structures.OrderSummaryStructure;
+import com.customermanagment.sims.model.structures.ProductStructure;
+import com.customermanagment.sims.model.tables.customer.Customer;
 import com.customermanagment.sims.model.tables.order.Order;
 import com.customermanagment.sims.model.tables.order.OrderProduct;
 import com.customermanagment.sims.model.tables.product.Brand;
 import com.customermanagment.sims.model.tables.product.Product;
-import com.customermanagment.sims.model.structures.ProductStructure;
 import com.customermanagment.sims.repository.customer.CustomerAddressRepository;
 import com.customermanagment.sims.repository.customer.CustomerRepository;
 import com.customermanagment.sims.repository.order.OrderProductRepository;
@@ -15,6 +16,7 @@ import com.customermanagment.sims.repository.product.ProductRepository;
 import com.customermanagment.sims.service.inventory.InventoryServiceImplementation;
 import com.customermanagment.sims.utility.Utility;
 import org.springframework.stereotype.Service;
+
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -30,6 +32,7 @@ import java.util.List;
 public class OrderServiceImplementation implements OrderService {
 
     Utility utility = new Utility();
+
     final OrderRepository orderRepository; final OrderProductRepository orderProductRepository;
     final InventoryServiceImplementation inventoryService;
     final BrandRepository brandRepository;
@@ -51,7 +54,6 @@ public class OrderServiceImplementation implements OrderService {
         this.orderProductRepository = orderProductRepository;
         this.inventoryService = inventoryService;
         this.customerRepository = customerRepository;
-
         this.customerAddressRepository = customerAddressRepository;
         this.brandRepository = brandRepository;
         this.productRepository = productRepository;
@@ -115,10 +117,9 @@ public class OrderServiceImplementation implements OrderService {
     public void deleteOrderProductsByOrderId(long orderId) {
         List<OrderProduct> allOrderProducts = orderProductRepository.findAll();
         Order order = getOrderById(orderId);
-        for(OrderProduct op : allOrderProducts)
-        {
-            if(op.getOrderId() == orderId)
-            {
+
+        for (OrderProduct op : allOrderProducts) {
+            if (op.getOrderId() == orderId) {
                 orderProductRepository.deleteById(op.getId());
             }
         }
@@ -133,20 +134,19 @@ public class OrderServiceImplementation implements OrderService {
     @Override
     public List<Product> getProductsByOrderId(long orderId) throws Exception {
         List<Product> products = new ArrayList<>();
-        for(OrderProduct op : orderProductRepository.findAll())
-        {
-            if(op.getOrderId() == orderId)
-            {
-               try {
-                   Product p = inventoryService.getProductById(op.getProductId());
-                   products.add(p);
-               }
-               catch (Exception e){
-                   throw new Exception("Some products dont exists anymore, your order will be deleted.");
-               }
+
+        for (OrderProduct op : orderProductRepository.findAll()) {
+            if (op.getOrderId() == orderId) {
+                try {
+                    Product p = inventoryService.getProductById(op.getProductId());
+                    products.add(p);
+                } catch (Exception e) {
+                    throw new Exception("Some products dont exists anymore, your order will be deleted.");
+                }
 
             }
         }
+
         return products;
     }
 
@@ -160,6 +160,7 @@ public class OrderServiceImplementation implements OrderService {
         Product product = inventoryService.getProductById(productId);
         Brand brand = inventoryService.GetBrandByProductId(productId);
         ProductStructure productSummary = new ProductStructure();
+
         String price = String.valueOf(product.getPrice());
 
         productSummary.setID(product.getId());
@@ -179,19 +180,19 @@ public class OrderServiceImplementation implements OrderService {
     @Override
     public List<ProductStructure> getProductsForSummary(long orderId) {
         List<ProductStructure> productSummaries = new ArrayList<>();
-        List<Product> products = new ArrayList<>();
+        List<Product> products;
         long counter = 1;
+
         try {
             products = getProductsByOrderId(orderId);
-            for(Product product : products)
-            {
+            for (Product product : products) {
                 ProductStructure productSummary = getProductSummary(product.getId());
                 productSummary.setID(counter);
                 productSummaries.add(productSummary);
                 counter++;
             }
+        } catch (Exception e) {
         }
-        catch (Exception e) { }
 
         return productSummaries;
     }
@@ -234,15 +235,22 @@ public class OrderServiceImplementation implements OrderService {
     public void insertOrders() throws Exception {
         List<Customer> customers = customerRepository.findAll();
         List<Product> products = inventoryService.getProducts();
-        if(customers.isEmpty()){utility.insertCustomers(customerRepository, customerAddressRepository);}
-        if(products.isEmpty()){ utility.insertInventory(brandRepository, productRepository);}
 
+        if (customers.isEmpty()) {
+            utility.insertCustomers(customerRepository, customerAddressRepository);
+        }
 
-        utility.insertOrders(customers, products ,orderProductRepository,orderRepository, this);
+        if (products.isEmpty()) {
+            utility.insertInventory(brandRepository, productRepository);
+        }
+
+        utility.insertOrders(customers, products, orderProductRepository, orderRepository, this);
     }
 
     /**
-     * deletes all incomplete orders (validation function triggered when a order process stopped
+     * Deletes all incomplete orders
+     *
+     * @throws Exception
      */
     @Override
     public void clearIncompleteOrders() {
@@ -253,6 +261,4 @@ public class OrderServiceImplementation implements OrderService {
                 }
             }
     }
-
-
 }

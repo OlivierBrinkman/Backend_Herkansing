@@ -3,22 +3,40 @@ import javax.persistence.*;
 /**
  * Customer_Address Entity
  *
- * @author  Olivier Brinkman
+ * @author Olivier Brinkman
  * @version 1.0
- * @since   12/02/2019
+ * @since 12/02/2019
  */
 @Entity
 @Table(name = "CUSTOMER_ADDRESS")
 public class CustomerAddress {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO) @Column(name = "ID") private long id;
-    @Column(name = "CUSTOMER_ID") private long customerId;
-    @Column(name = "STREET") private String street;
-    @Column(name = "NUMBER") private String number;
-    @Column(name = "ZIPCODE") private String zipcode;
-    @Column(name = "CITY") private String city;
-    @Column(name = "COUNTRY") private String country;
+    //Attributes
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ID")
+    private long id;
 
+    @Column(name = "CUSTOMER_ID")
+    private long customerId;
+
+    @Column(name = "STREET")
+    private String street;
+
+    @Column(name = "NUMBER")
+    private String number;
+
+    @Column(name = "ZIPCODE")
+    private String zipcode;
+
+    @Column(name = "CITY")
+    private String city;
+
+    @Column(name = "COUNTRY")
+    private String country;
+
+
+    //Constructors
     public CustomerAddress(long id, long customerId, String street, String number, String zipcode, String city, String country) {
         this.id = id;
         this.street = street;
@@ -28,11 +46,14 @@ public class CustomerAddress {
         this.country = country;
         this.customerId = customerId;
     }
+
     public CustomerAddress() {}
 
+    //Getters and Setters
     public long getId() {
         return id;
     }
+
     public void setId(long id) {
         this.id = id;
     }
@@ -40,6 +61,7 @@ public class CustomerAddress {
     public String getStreet() {
         return street;
     }
+
     public void setStreet(String street) {
         this.street = street;
     }
@@ -47,6 +69,7 @@ public class CustomerAddress {
     public String getNumber() {
         return number;
     }
+
     public void setNumber(String number) {
         this.number = number;
     }
@@ -54,6 +77,7 @@ public class CustomerAddress {
     public String getZipcode() {
         return zipcode;
     }
+
     public void setZipcode(String zipcode) {
         this.zipcode = zipcode;
     }
@@ -61,6 +85,7 @@ public class CustomerAddress {
     public String getCity() {
         return city;
     }
+
     public void setCity(String city) {
         this.city = city;
     }
@@ -68,6 +93,7 @@ public class CustomerAddress {
     public String getCountry() {
         return country;
     }
+
     public void setCountry(String country) {
         this.country = country;
     }
@@ -75,10 +101,12 @@ public class CustomerAddress {
     public long getCustomerId() {
         return customerId;
     }
+
     public void setCustomerId(long customerId) {
         this.customerId = customerId;
     }
 
+    //To string
     @Override
     public String toString() {
         return "Customer_Address{" +

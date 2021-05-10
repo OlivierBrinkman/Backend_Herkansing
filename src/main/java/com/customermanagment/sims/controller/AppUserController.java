@@ -31,23 +31,25 @@ public class AppUserController {
 
     /**
      * returns Users
+     *
      * @param model
      * @return
      */
     @GetMapping("/users")
-    public String indexUsers(Model model) {
+    public String index(Model model) {
         selectedAppUserId = 0;
-        model.addAttribute("users",appUserService.getAppUsersForDisplay());
+        model.addAttribute("users", appUserService.getAppUsersForDisplay());
         return "appUser/AppUsers";
     }
 
     /**
      * navigates to Create page
+     *
      * @param model
      * @return
      */
     @GetMapping("/users/new")
-    public String newUser(Model model){
+    public String userNew(Model model) {
         model.addAttribute("newAppUser", new AppUser());
         model.addAttribute("newAppUserRole", new AppUserRole());
         //model.addAttribute("roles", appUserService.getRoles());
@@ -56,18 +58,19 @@ public class AppUserController {
 
     /**
      * creates App_User
+     *
      * @param appUser
      * @param appUserRole
      * @return
      */
     @PostMapping("/users/new")
-    public String createUser(@ModelAttribute AppUser appUser, @ModelAttribute AppUserRole appUserRole) {
-        for(Roles role : Roles.values()) {
-            if(appUserRole.getUserRole() == role.toString()) {
+    public String userCreate(@ModelAttribute AppUser appUser, @ModelAttribute AppUserRole appUserRole) {
+        for (Roles role : Roles.values()) {
+            if (appUserRole.getUserRole() == role.toString()) {
                 appUserRole.setUserRole(role.toString());
             }
         }
-        long userId  = appUserService.createAppUser(appUser);
+        long userId = appUserService.createAppUser(appUser);
         appUserRole.setUserId(userId);
         appUserService.createUserRole(appUserRole);
         return "redirect:/users";
@@ -75,26 +78,32 @@ public class AppUserController {
 
     /**
      * deletes App_User
+     *
      * @param userId
      * @return
      */
-    @RequestMapping(value = "/users/delete" ,method = RequestMethod.GET)
-    public String deleteUser(@RequestParam(name="appUserId")long userId) {
-        try { appUserService.deleteUserRole(appUserService.getRoleByAppUserId(userId).getId());}
-        catch(Exception e) { }
+    @RequestMapping(value = "/users/delete", method = RequestMethod.GET)
+    public String userDelete(@RequestParam(name = "appUserId") long userId) {
+        try {
+            appUserService.deleteUserRole(appUserService.getRoleByAppUserId(userId).getId());
+        } catch (Exception e) {
+        }
         appUserService.deleteAppUser(userId);
         return "redirect:/users";
     }
 
     /**
      * navigates to Update screen
+     *
      * @param appUserId
      * @param model
      * @return
      */
     @GetMapping(value = "/users/edit")
-    public String selectUser(@RequestParam(name="appUserId")long appUserId, Model model) {
-        if(appUserId == 0) { return "redirect:/users"; }
+    public String userEdit(@RequestParam(name = "appUserId") long appUserId, Model model) {
+        if (appUserId == 0) {
+            return "redirect:/users";
+        }
         selectedAppUserId = appUserId;
         selectedAppUserRoleId = appUserService.getRoleByAppUserId(appUserId).getId();
         AppUser appUserToEdit = appUserService.getAppUserById(appUserId);
@@ -104,18 +113,19 @@ public class AppUserController {
 
         System.out.println(appUserId);
 
-        return "appUser/AppUserUpdate";
+        return "appUser/AppUser_Update";
     }
 
     /**
      * updates App_User
+     *
      * @param appUser
      * @param appUserRole
      * @param result
      * @return
      */
-    @PostMapping(value = "/users/edit/{appUserId}", consumes = "application/x-www-form-urlencoded")
-    public String updateUser(AppUser appUser, AppUserRole appUserRole, BindingResult result) {
+    @PostMapping(value = "/users/edit}", consumes = "application/x-www-form-urlencoded")
+    public String userUpdate(AppUser appUser, AppUserRole appUserRole, BindingResult result) {
         if (result.hasErrors()) {
             return "redirect:/users";
         }

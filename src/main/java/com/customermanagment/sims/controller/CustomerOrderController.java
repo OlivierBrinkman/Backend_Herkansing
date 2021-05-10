@@ -54,13 +54,14 @@ public class CustomerOrderController {
 
     /**
      * sets given details as selected customer for step 2
+     *
      * @param customer
      * @param customerAddress
      * @param model
      * @return
      */
     @PostMapping("/placeOrder/1")
-    public String SetCustomerDetails(@ModelAttribute Customer customer, @ModelAttribute CustomerAddress customerAddress, Model model) {
+    public String setCustomerDetails(@ModelAttribute Customer customer, @ModelAttribute CustomerAddress customerAddress, Model model) {
         customerId = customerService.createCustomer(customer);
         customerAddress.setCustomerId(customerId);
         customerService.createCustomerAddress(customerAddress);

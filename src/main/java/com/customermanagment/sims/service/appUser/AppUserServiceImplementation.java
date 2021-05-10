@@ -1,8 +1,9 @@
 package com.customermanagment.sims.service.appUser;
+
 import com.customermanagment.sims.WebSecurityConfig;
+import com.customermanagment.sims.model.structures.AppUserStructure;
 import com.customermanagment.sims.model.tables.appUser.AppUser;
 import com.customermanagment.sims.model.tables.appUser.AppUserRole;
-import com.customermanagment.sims.model.structures.AppUserStructure;
 import com.customermanagment.sims.repository.appUser.AppUserRepository;
 import com.customermanagment.sims.repository.appUser.AppUserRoleRepository;
 import org.springframework.stereotype.Service;
@@ -18,8 +19,10 @@ import java.util.List;
  */
 @Service
 public class AppUserServiceImplementation implements AppUserService {
+
     final AppUserRepository appUserRepository;
     final AppUserRoleRepository appUserRoleRepository;
+
     /**
      * service constructor
      * @param appUserRepository
@@ -57,11 +60,13 @@ public class AppUserServiceImplementation implements AppUserService {
     @Override
     public AppUserRole getRoleByAppUserId(long appUserId) {
         AppUserRole local_AppUserRole = new AppUserRole();
+
         for (AppUserRole appUserRole : appUserRoleRepository.findAll()) {
             if (appUserRole.getUserId() == appUserId) {
                 local_AppUserRole = appUserRole;
             }
         }
+
         return local_AppUserRole;
     }
 
@@ -72,11 +77,13 @@ public class AppUserServiceImplementation implements AppUserService {
     @Override
     public List<AppUserStructure> getAppUsersForDisplay() {
         List<AppUserStructure> appUserDisplayList = new ArrayList<>();
+
         for (AppUser appUser : appUserRepository.findAll()) {
             appUser.setPassword(passwordEncoder(appUser.getPassword()));
             AppUserStructure tempAppUserDisplay = new AppUserStructure(appUser, getRoleByAppUserId(appUser.getId()));
             appUserDisplayList.add(tempAppUserDisplay);
         }
+
         return appUserDisplayList;
     }
 
@@ -128,4 +135,5 @@ public class AppUserServiceImplementation implements AppUserService {
         String encodedPassword = webConfig.passwordEncoder().encode(password);
         return encodedPassword;
     }
+
 }

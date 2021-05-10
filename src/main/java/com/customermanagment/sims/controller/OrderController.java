@@ -1,4 +1,5 @@
 package com.customermanagment.sims.controller;
+
 import com.customermanagment.sims.model.tables.customer.Customer;
 import com.customermanagment.sims.model.tables.customer.CustomerAddress;
 import com.customermanagment.sims.model.tables.order.Order;
@@ -9,7 +10,11 @@ import com.customermanagment.sims.service.order.OrderServiceImplementation;
 import com.customermanagment.sims.utility.Utility;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import java.util.ArrayList;
 import java.util.List;
 /**
@@ -69,18 +74,19 @@ public class OrderController {
 
     /**
      * submits selected customer then returns page 2 of order process
+     *
      * @param customerId
      * @param model
      * @return
      */
     @RequestMapping(value = "/order/step2", method = RequestMethod.GET)
-    public String selectCustomer(@RequestParam(name="customerId")long customerId, Model model) {
-            orderProductsListSize = 0;
-            totalOrderPrice = 0;
-            productsToOrder.clear();
-            order.setDateCreated(utility.getCurrentDate());
-            order.setCustomerId(customerId);
-            return navigateStep2(model, customerId);
+    public String customerSelected(@RequestParam(name = "customerId") long customerId, Model model) {
+        orderProductsListSize = 0;
+        totalOrderPrice = 0;
+        productsToOrder.clear();
+        order.setDateCreated(utility.getCurrentDate());
+        order.setCustomerId(customerId);
+        return navigateStep2(model, customerId);
     }
 
     /**
@@ -110,7 +116,7 @@ public class OrderController {
     public String submitOrder(Model model) throws Exception {
         if(order.getCustomerId() > 0) {
             orderService.createOrder(order);
-            return navigateSummary(model, order.getId());
+            return navigateOrderSummary(model, order.getId());
         }
         else {
             return navigateOrders(model);
@@ -126,7 +132,7 @@ public class OrderController {
      */
     @RequestMapping(value = "/orders/details")
     public String orderDetails(@RequestParam(name="orderId")long orderId, Model model) throws Exception {
-        return navigateSummary(model, orderId);
+        return navigateOrderSummary(model, orderId);
     }
 
     /**
@@ -181,7 +187,7 @@ public class OrderController {
      */
     public String navigateStep1(Model model) {
         model.addAttribute("customers", customerService.getAllCustomers());
-        return "order/Order_Create_Step1";
+        return "order/OrderCreateStep1";
     }
 
     /**
@@ -193,28 +199,30 @@ public class OrderController {
     public String navigateStep2(Model model, long customerId) {
         model.addAttribute("customerId", customerId);
         model.addAttribute("products", inventoryService.getAvailableProducts());
-        return "order/Order_Create_Step2";
+        return "order/OrderCreateStep2";
     }
 
     /**
      * navigates to order summary page
+     *
      * @param model
      * @param orderId
      * @return
      * @throws Exception
      */
-    public String navigateSummary(Model model, long orderId) throws Exception {
+    public String navigateOrderSummary(Model model, long orderId) throws Exception {
         Order selectedOrder = orderService.getOrderById(orderId);
 
         Customer customer = customerService.getCustomerById(selectedOrder.getCustomerId());
         CustomerAddress customerAddress = customerService.getCustomerAddressByCustomerId(customer.getId());
 
-        for(Long selectedId : productsToOrder) {
+        for (Long selectedId : productsToOrder) {
             OrderProduct orderProduct = new OrderProduct();
             orderProduct.setOrderId(selectedOrder.getId());
             orderProduct.setProductId(selectedId);
             orderService.createOrderProduct(orderProduct);
         }
+
         String orderPrice ="€" + utility.calculateTotalByOrderId(orderId, orderService);
         selectedOrder.setTotalPrice((int)utility.calculateTotalByOrderId(orderId, orderService));
         orderService.createOrder(selectedOrder);
@@ -224,6 +232,6 @@ public class OrderController {
         model.addAttribute("orderPrice" , orderPrice);
         model.addAttribute("orderSummary", orderService.getSummaryStructure(orderId));
         model.addAttribute("products", orderService.getProductsForSummary(selectedOrder.getId()));
-        return "order/Order_Submit_Summary";
+        return "order/OrderSubmitSummary";
     }
 }

@@ -34,65 +34,39 @@ public class InventoryController {
 
     /**
      * return inventory page
+     *
      * @param model
      * @return
      */
     @GetMapping("/inventory")
-    public String indexBrands(Model model){
-        model.addAttribute("brands",inventoryService.getBrands());
+    public String index(Model model) {
+        model.addAttribute("brands", inventoryService.getBrands());
         model.addAttribute("totalValue", inventoryService.calculateInventoryValue());
         model.addAttribute("newBrand", new Brand());
         return "inventory/Brands";
-    }
-
-    /**
-     * creates new brand
-     * @param brand
-     * @param model
-     * @return
-     */
-    @PostMapping("/inventory/brand/new")
-    public String saveBrand(@ModelAttribute Brand brand, Model model) {
-        inventoryService.createBrand(brand);
-        model.addAttribute("brands",inventoryService.getBrands());
-        model.addAttribute("newBrand", new Brand());
-        model.addAttribute("totalValue", inventoryService.calculateInventoryValue());
-        return "inventory/Brands";
-    }
-
-    /**
-     * deletes brand
-     * @param brand
-     * @param model
-     * @return
-     */
-    @RequestMapping(value = "/inventory/brand/delete" ,method = RequestMethod.GET)
-    public String deleteBrand(@RequestParam(name="brand")long brand, Model model) {
-        inventoryService.deleteBrand(brand);
-        model.addAttribute("brands",inventoryService.getBrands());
-        model.addAttribute("newBrand", new Brand());
-        return "redirect:/inventory";
     }
 
     /**
      * returns products by brand id
+     *
      * @param brand
      * @param model
      * @return
      */
     @GetMapping(value = "/inventory/products")
-    public String indexProducts(@RequestParam(name="brand")long brand, Model model) {
+    public String brandProducts(@RequestParam(name = "brand") long brand, Model model) {
         return navigateProducts(model, brand);
     }
 
     /**
      * navigates to new product page
+     *
      * @param brandId
      * @param model
      * @return
      */
     @GetMapping(value = "/inventory/product/new")
-    public String newProduct(@RequestParam(name="brandId")long brandId, Model model) {
+    public String productNew(@RequestParam(name = "brandId") long brandId, Model model) {
         Product product = new Product();
         selectedBrandId = brandId;
         Brand selectedBrand = inventoryService.getBrandById(brandId);
@@ -105,60 +79,98 @@ public class InventoryController {
 
     /**
      * creates product
+     *
      * @param product
      * @param model
      * @return
      */
     @PostMapping(value = "/inventory/product/new")
-    public String createProduct(@ModelAttribute Product product, Model model) {
-          inventoryService.createOrUpdateProduct(product);
-           return navigateProducts(model, product.getBrand());
+    public String productCreate(@ModelAttribute Product product, Model model) {
+        inventoryService.createOrUpdateProduct(product);
+        return navigateProducts(model, product.getBrand());
     }
 
     /**
      * navigates to Update page
+     *
      * @param productId
      * @param model
      * @return
      */
     @GetMapping(value = "/inventory/product/edit")
-    public String selectProduct(@RequestParam(name="productId")long productId, Model model) {
+    public String productSelect(@RequestParam(name = "productId") long productId, Model model) {
         model.addAttribute("selectedProduct", inventoryService.getProductById(productId));
         return "inventory/ProductUpdate";
     }
 
     /**
      * updates product
+     *
      * @param product
      * @param result
      * @param model
      * @return
      */
     @PostMapping(value = "/inventory/product/edit/{id}", consumes = "application/x-www-form-urlencoded")
-    public String updateProduct(Product product, BindingResult result, Model model) {
-        if (result.hasErrors()) { return navigateProducts(model, product.getBrand()); }
+    public String productUpdate(Product product, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return navigateProducts(model, product.getBrand());
+        }
         inventoryService.createOrUpdateProduct(product);
         return navigateProducts(model, product.getBrand());
     }
 
     /**
      * delets products
+     *
      * @param product
      * @param model
      * @return
      */
-    @RequestMapping(value = "/inventory/product/delete" ,method = RequestMethod.GET)
-    public String deleteProduct(@RequestParam(name="product")long product, Model model) {
+    @RequestMapping(value = "/inventory/product/delete", method = RequestMethod.GET)
+    public String productDelete(@RequestParam(name = "product") long product, Model model) {
         Product p = inventoryService.getProductById(product);
         long brandId = p.getBrand();
         inventoryService.deleteProduct(product);
-        model.addAttribute("products",inventoryService.getProductsByBrandId(brandId));
+        model.addAttribute("products", inventoryService.getProductsByBrandId(brandId));
         model.addAttribute("selectedBrand", inventoryService.getBrandById(brandId));
         return "inventory/Products";
     }
 
     /**
+     * creates new brand
+     *
+     * @param brand
+     * @param model
+     * @return
+     */
+    @PostMapping("/inventory/brand/new")
+    public String brandSave(@ModelAttribute Brand brand, Model model) {
+        inventoryService.createBrand(brand);
+        model.addAttribute("brands", inventoryService.getBrands());
+        model.addAttribute("newBrand", new Brand());
+        model.addAttribute("totalValue", inventoryService.calculateInventoryValue());
+        return "inventory/Brands";
+    }
+
+    /**
+     * deletes brand
+     *
+     * @param brand
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/inventory/brand/delete", method = RequestMethod.GET)
+    public String brandDelete(@RequestParam(name = "brand") long brand, Model model) {
+        inventoryService.deleteBrand(brand);
+        model.addAttribute("brands", inventoryService.getBrands());
+        model.addAttribute("newBrand", new Brand());
+        return "redirect:/inventory";
+    }
+
+    /**
      * deletes all inventory
+     *
      * @param model
      * @return
      */

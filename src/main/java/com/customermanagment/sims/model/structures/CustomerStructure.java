@@ -14,6 +14,7 @@ public class CustomerStructure {
 
     //Attributes
     public Customer customer;
+
     public CustomerAddress customerAddress;
 
     //Constructor

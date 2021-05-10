@@ -10,9 +10,13 @@ public class ProductStructure {
 
     //ATTRIBUTES
     private Long ID;
+
     private String name;
+
     private String description;
+
     private String price;
+
     private String brand;
 
     //CONSTRUCTORS

@@ -13,6 +13,7 @@ public class AppUserStructure {
 
     //Attributes
     public AppUser appUser;
+
     public AppUserRole appUserRole;
 
     //Constructors
@@ -20,21 +21,18 @@ public class AppUserStructure {
         this.appUser = appUser;
         this.appUserRole = appUserRole;
     }
-    public AppUserStructure() { }
 
     //Getters and Setters
     public AppUser getAppUser() {
         return appUser;
     }
+
     public void setAppUser(AppUser appUser) {
         this.appUser = appUser;
     }
 
     public AppUserRole getAppUserRole() {
         return appUserRole;
-    }
-    public void setAppUserRole(AppUserRole appUserRole) {
-        this.appUserRole = appUserRole;
     }
 
     //To string

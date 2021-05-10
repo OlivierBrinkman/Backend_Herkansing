@@ -1,9 +1,9 @@
 package com.customermanagment.sims.repository.appUser;
+
 import com.customermanagment.sims.model.tables.appUser.AppUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 /**
  * App_User Repository
  *
@@ -13,8 +13,5 @@ import java.util.List;
  */
 @Repository
 public interface AppUserRepository extends JpaRepository<AppUser, Long> {
-        AppUser findAppUserById(Long appUserId);
-        AppUser findAppUserByUsernameAndPassword(String username, String password);
-        List<AppUser> getAppUsers();
-        void deleteAppUserById(Long appUserId);
+
 }

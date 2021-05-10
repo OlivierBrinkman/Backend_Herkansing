@@ -2,6 +2,7 @@ package com.customermanagment.sims.repository.order;
 import com.customermanagment.sims.model.tables.order.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
 /**
  * Order Repository
  *
