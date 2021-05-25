@@ -17,7 +17,8 @@ public interface AppUserService {
 
      AppUser getAppUserById(long appUserId);
      AppUserRole getRoleByAppUserId(long appUserId);
-     List<AppUser> getAppUsers();
+
+    List<AppUser> getAppUsers();
      List<AppUserStructure> getAppUsersForDisplay();
 
      void deleteAppUser(long userId);

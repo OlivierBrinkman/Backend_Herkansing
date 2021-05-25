@@ -56,10 +56,8 @@ public class OrderController {
      */
     @GetMapping("/orders")
     public String index(Model model){
-        productsToOrder.clear();
-        orderService.clearIncompleteOrders();
-        model.addAttribute("numberOfOrders", orderService.getOrders().size() + " orders");
-        return navigateOrders(model);
+        model.addAttribute("orders", orderService.getOrders());
+        return "order/Orders";
     }
 
     /**
@@ -177,7 +175,7 @@ public class OrderController {
      */
     public String navigateOrders(Model model) {
         model.addAttribute("orders",orderService.getOrders());
-        return "order/Orders";
+        return "redirect:/orders";
     }
 
     /**

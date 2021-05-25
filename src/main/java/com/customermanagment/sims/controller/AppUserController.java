@@ -44,7 +44,6 @@ public class AppUserController {
 
     /**
      * navigates to Create page
-     *
      * @param model
      * @return
      */
@@ -52,7 +51,6 @@ public class AppUserController {
     public String userNew(Model model) {
         model.addAttribute("newAppUser", new AppUser());
         model.addAttribute("newAppUserRole", new AppUserRole());
-        //model.addAttribute("roles", appUserService.getRoles());
         return "appUser/AppUserCreate";
     }
 
@@ -113,7 +111,7 @@ public class AppUserController {
 
         System.out.println(appUserId);
 
-        return "appUser/AppUser_Update";
+        return "appUser/AppUserUpdate";
     }
 
     /**

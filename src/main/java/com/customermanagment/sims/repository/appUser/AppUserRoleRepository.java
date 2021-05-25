@@ -12,4 +12,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AppUserRoleRepository extends JpaRepository<AppUserRole, Long> {
 
+
 }

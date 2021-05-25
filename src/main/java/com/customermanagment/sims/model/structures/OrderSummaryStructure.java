@@ -52,6 +52,26 @@ public class OrderSummaryStructure {
         this.exVAT = exVAT;
     }
 
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public String getNewInventory() {
+        return newInventory;
+    }
+
+    public int getAmountProducts() {
+        return amountProducts;
+    }
+
+    public String getExVAT() {
+        return exVAT;
+    }
+
+    public String getVAT() {
+        return VAT;
+    }
+
     //To string
     @Override
     public String toString() {
