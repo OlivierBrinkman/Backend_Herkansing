@@ -35,6 +35,7 @@ public class AppUserServiceImplementation implements AppUserService {
 
     /**
      * get all app users
+     *
      * @return
      */
     @Override
@@ -72,6 +73,7 @@ public class AppUserServiceImplementation implements AppUserService {
 
     /**
      * get app users in structure for display
+     *
      * @return
      */
     @Override

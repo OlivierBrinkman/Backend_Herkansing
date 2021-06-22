@@ -27,12 +27,15 @@ public class ProductStructure {
         this.price = price;
         this.brand = brand;
     }
-    public ProductStructure() { }
+
+    public ProductStructure() {
+    }
 
     //GETTERS AND SETTERS
     public Long getID() {
         return ID;
     }
+
     public void setID(Long ID) {
         this.ID = ID;
     }

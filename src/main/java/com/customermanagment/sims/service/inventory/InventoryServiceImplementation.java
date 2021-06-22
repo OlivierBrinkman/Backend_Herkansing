@@ -48,6 +48,7 @@ public class InventoryServiceImplementation implements InventoryService {
 
     /**
      * get brands
+     *
      * @return
      */
     @Override
@@ -57,11 +58,12 @@ public class InventoryServiceImplementation implements InventoryService {
 
     /**
      * creates brand
+     *
      * @param brand
      * @return
      */
     @Override
-    public long createBrand(Brand brand){
+    public long createBrand(Brand brand) {
         return brandRepository.save(brand).getId();
     }
 
@@ -91,7 +93,7 @@ public class InventoryServiceImplementation implements InventoryService {
      */
     @Override
     public long createOrUpdateProduct(Product product) {
-            return productRepository.save(product).getId();
+        return productRepository.save(product).getId();
     }
 
     /**
@@ -115,6 +117,7 @@ public class InventoryServiceImplementation implements InventoryService {
 
     /**
      * get all products
+     *
      * @return
      */
     @Override
@@ -136,6 +139,7 @@ public class InventoryServiceImplementation implements InventoryService {
 
     /**
      * get all products by brand id
+     *
      * @param brandId
      * @return
      */
@@ -143,28 +147,27 @@ public class InventoryServiceImplementation implements InventoryService {
     public List<Product> getProductsByBrandId(long brandId) {
         List<Product> productList = new ArrayList<>();
 
-        for(Product p : productRepository.findAll())
-            {
-                if(p.getBrand() == brandId)
-                {
-                    productList.add(p);
-                }
+        for (Product p : productRepository.findAll()) {
+            if (p.getBrand() == brandId) {
+                productList.add(p);
             }
+        }
 
         return productList;
     }
 
     /**
      * get available products
+     *
      * @return
      */
     @Override
     public List<Product> getAvailableProducts() {
         List<Product> availableProducts = new ArrayList<>();
 
-        for(Product product : productRepository.findAll()) {
-            if(product.getAmount() > 0) {
-                    availableProducts.add(product);
+        for (Product product : productRepository.findAll()) {
+            if (product.getAmount() > 0) {
+                availableProducts.add(product);
             }
         }
 
@@ -180,10 +183,8 @@ public class InventoryServiceImplementation implements InventoryService {
         List<Product> allProducts = productRepository.findAll();
         int totalValue = 0;
 
-        for(Product product : allProducts)
-        {
-            for(int i = 0; i < product.getAmount(); i++)
-            {
+        for (Product product : allProducts) {
+            for (int i = 0; i < product.getAmount(); i++) {
                 totalValue = totalValue + product.getPrice();
             }
         }
@@ -204,10 +205,8 @@ public class InventoryServiceImplementation implements InventoryService {
         List<Product> allProducts = getProductsByBrandId(brandId);
         int totalBrandValue = 0;
 
-        for(Product product : allProducts)
-        {
-            for(int i = 0; i < product.getAmount(); i++)
-            {
+        for (Product product : allProducts) {
+            for (int i = 0; i < product.getAmount(); i++) {
                 totalBrandValue = totalBrandValue + product.getPrice();
             }
         }
@@ -230,7 +229,7 @@ public class InventoryServiceImplementation implements InventoryService {
      * insert dummy inventory
      */
     @Override
-    public void insertInventory(){
+    public void insertInventory() {
         utility.insertInventory(brandRepository, productRepository);
     }
 }

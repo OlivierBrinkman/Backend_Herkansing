@@ -39,7 +39,6 @@ public class OrderController {
 
     /**
      * services constructor
-     * @param inventoryService
      * @param customerService
      * @param orderService
      */
@@ -51,11 +50,12 @@ public class OrderController {
 
     /**
      * return orders page
+     *
      * @param model
      * @return
      */
     @GetMapping("/orders")
-    public String index(Model model){
+    public String index(Model model) {
         model.addAttribute("orders", orderService.getOrders());
         return "order/Orders";
     }
@@ -89,17 +89,18 @@ public class OrderController {
 
     /**
      * adds product to order as orderProduct
+     *
      * @param productId
      * @param model
      * @return
      */
     @GetMapping(value = "/order/add")
-    public String addProductToOrder(@RequestParam(name="productId")long productId, Model model) {
+    public String addProductToOrder(@RequestParam(name = "productId") long productId, Model model) {
         productsToOrder.add(productId);
         totalOrderPrice = totalOrderPrice + inventoryService.getProductById(productId).getPrice();
         orderProductsListSize++;
-        model.addAttribute("productsListSize",  + orderProductsListSize);
-        model.addAttribute("totalPrice", "€" +totalOrderPrice+ ",-");
+        model.addAttribute("productsListSize", +orderProductsListSize);
+        model.addAttribute("totalPrice", "€" + totalOrderPrice + ",-");
         model.addAttribute("products", inventoryService.getAvailableProducts());
         return "order/OrderCreateStep2";
     }
@@ -112,35 +113,36 @@ public class OrderController {
      */
     @RequestMapping(value = "/order/summary")
     public String submitOrder(Model model) throws Exception {
-        if(order.getCustomerId() > 0) {
+        if (order.getCustomerId() > 0) {
             orderService.createOrder(order);
             return navigateOrderSummary(model, order.getId());
-        }
-        else {
+        } else {
             return navigateOrders(model);
         }
     }
 
     /**
      * show order details
+     *
      * @param orderId
      * @param model
      * @return
      * @throws Exception
      */
     @RequestMapping(value = "/orders/details")
-    public String orderDetails(@RequestParam(name="orderId")long orderId, Model model) throws Exception {
+    public String orderDetails(@RequestParam(name = "orderId") long orderId, Model model) throws Exception {
         return navigateOrderSummary(model, orderId);
     }
 
     /**
      * deletes order
+     *
      * @param orderId
      * @param model
      * @return
      */
     @RequestMapping(value = "/orders/delete")
-    public String deleteOrder(@RequestParam(name="orderId")long orderId, Model model) {
+    public String deleteOrder(@RequestParam(name = "orderId") long orderId, Model model) {
         orderService.deleteOrder(orderId);
         return navigateOrders(model);
     }
@@ -158,7 +160,8 @@ public class OrderController {
     }
 
     /**
-     * delets all orders
+     * deletes all orders
+     *
      * @param model
      * @return
      */
@@ -174,7 +177,7 @@ public class OrderController {
      * @return
      */
     public String navigateOrders(Model model) {
-        model.addAttribute("orders",orderService.getOrders());
+        model.addAttribute("orders", orderService.getOrders());
         return "redirect:/orders";
     }
 
@@ -221,13 +224,13 @@ public class OrderController {
             orderService.createOrderProduct(orderProduct);
         }
 
-        String orderPrice ="€" + utility.calculateTotalByOrderId(orderId, orderService);
-        selectedOrder.setTotalPrice((int)utility.calculateTotalByOrderId(orderId, orderService));
+        String orderPrice = "€" + utility.calculateTotalByOrderId(orderId, orderService);
+        selectedOrder.setTotalPrice((int) utility.calculateTotalByOrderId(orderId, orderService));
         orderService.createOrder(selectedOrder);
         model.addAttribute("order", orderService.getOrderById(selectedOrder.getId()));
         model.addAttribute("customer", customer);
         model.addAttribute("customerAddress", customerAddress);
-        model.addAttribute("orderPrice" , orderPrice);
+        model.addAttribute("orderPrice", orderPrice);
         model.addAttribute("orderSummary", orderService.getSummaryStructure(orderId));
         model.addAttribute("products", orderService.getProductsForSummary(selectedOrder.getId()));
         return "order/OrderSubmitSummary";

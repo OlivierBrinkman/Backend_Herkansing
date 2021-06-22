@@ -41,11 +41,12 @@ public class CustomerServiceImplementation implements CustomerService {
 
     /**
      * get all customers
+     *
      * @return
      */
     @Override
     public List<Customer> getAllCustomers() {
-            return customerRepo.findAll();
+        return customerRepo.findAll();
     }
 
     /**
@@ -55,7 +56,7 @@ public class CustomerServiceImplementation implements CustomerService {
      */
     @Override
     public Customer getCustomerById(long id) {
-            return customerRepo.findById(id).get();
+        return customerRepo.findById(id).get();
     }
 
     /**
@@ -65,12 +66,12 @@ public class CustomerServiceImplementation implements CustomerService {
      */
     @Override
     public long createCustomer(Customer customer) {
-            Date temp_now =  java.sql.Date.valueOf(java.time.LocalDate.now());
-            SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy");
-            String now = DateFor.format(temp_now);
+        Date temp_now = java.sql.Date.valueOf(java.time.LocalDate.now());
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy");
+        String now = DateFor.format(temp_now);
 
-            customer.setCustomerSince(now);
-            return customerRepo.save(customer).getId();
+        customer.setCustomerSince(now);
+        return customerRepo.save(customer).getId();
     }
 
     /**
@@ -89,7 +90,7 @@ public class CustomerServiceImplementation implements CustomerService {
      */
     @Override
     public long createCustomerAddress(CustomerAddress customerAddress) {
-            return addressRepo.save(customerAddress).getId();
+        return addressRepo.save(customerAddress).getId();
     }
 
     /**

@@ -31,10 +31,11 @@ public class MainController {
 
     /**
      * logs user out
+     *
      * @return
      */
     @PostMapping("/logout")
-    public String logout(){
+    public String logout() {
         return "Login";
     }
 
@@ -45,8 +46,8 @@ public class MainController {
      */
     public String initializeIndex(Model model) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserDetails userDetails = ((UserDetails)principal);
-        model.addAttribute("userDetails",userDetails );
+        UserDetails userDetails = ((UserDetails) principal);
+        model.addAttribute("userDetails", userDetails);
         return "Index";
     }
 

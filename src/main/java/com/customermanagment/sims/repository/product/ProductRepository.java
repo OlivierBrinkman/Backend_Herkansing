@@ -6,12 +6,10 @@ import org.springframework.stereotype.Repository;
 /**
  * Product Repository
  *
- * @author  Olivier Brinkman
+ * @author Olivier Brinkman
  * @version 1.0
- * @since   12/02/2019
+ * @since 12/02/2019
  */
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
-
-
 }

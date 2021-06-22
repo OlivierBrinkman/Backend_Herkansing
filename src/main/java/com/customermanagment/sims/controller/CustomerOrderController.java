@@ -41,12 +41,14 @@ public class CustomerOrderController {
 
     /**
      * navigates to customerdetails page for order
+     *
      * @param model
      * @return
      */
     @GetMapping("/placeOrder/1")
-    public String index(Model model){
-        orderProductsListSize = 0;totalOrderPrice = 0;
+    public String index(Model model) {
+        orderProductsListSize = 0;
+        totalOrderPrice = 0;
         model.addAttribute("newCustomer", new Customer());
         model.addAttribute("newCustomerAddress", new CustomerAddress());
         return "order/OrderCreateCustomerDetails";

@@ -24,20 +24,22 @@ import java.util.List;
 /**
  * Order Service implementation.
  *
- * @author  Olivier Brinkman
+ * @author Olivier Brinkman
  * @version 1.0
- * @since   12/02/2019
+ * @since 12/02/2019
  */
 @Service
 public class OrderServiceImplementation implements OrderService {
 
     Utility utility = new Utility();
 
-    final OrderRepository orderRepository; final OrderProductRepository orderProductRepository;
+    final OrderRepository orderRepository;
+    final OrderProductRepository orderProductRepository;
     final InventoryServiceImplementation inventoryService;
     final BrandRepository brandRepository;
     final ProductRepository productRepository;
-    final CustomerRepository customerRepository;final CustomerAddressRepository customerAddressRepository;
+    final CustomerRepository customerRepository;
+    final CustomerAddressRepository customerAddressRepository;
 
     /**
      * service constructor
@@ -90,10 +92,11 @@ public class OrderServiceImplementation implements OrderService {
 
     /**
      * get all orders
+     *
      * @return
      */
     @Override
-    public List<Order> getOrders () {
+    public List<Order> getOrders() {
         return orderRepository.findAll();
     }
 
@@ -127,6 +130,7 @@ public class OrderServiceImplementation implements OrderService {
 
     /**
      * get products by order id
+     *
      * @param orderId
      * @return
      * @throws Exception
@@ -174,6 +178,7 @@ public class OrderServiceImplementation implements OrderService {
 
     /**
      * get products by order id for order summary
+     *
      * @param orderId
      * @return
      */
@@ -223,7 +228,7 @@ public class OrderServiceImplementation implements OrderService {
      * deletes all orders
      */
     @Override
-    public void deleteOrders(){
+    public void deleteOrders() {
         utility.deleteOrders(orderRepository, orderProductRepository);
     }
 
@@ -254,11 +259,11 @@ public class OrderServiceImplementation implements OrderService {
      */
     @Override
     public void clearIncompleteOrders() {
-            List<Order> orders = orderRepository.findAll();
-            for(Order order : orders) {
-                if(order.getTotalPrice() == 0) {
-                    orderRepository.deleteById(order.getId());
-                }
+        List<Order> orders = orderRepository.findAll();
+        for (Order order : orders) {
+            if (order.getTotalPrice() == 0) {
+                orderRepository.deleteById(order.getId());
             }
+        }
     }
 }

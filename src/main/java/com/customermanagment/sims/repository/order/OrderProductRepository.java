@@ -13,6 +13,4 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface OrderProductRepository extends JpaRepository<OrderProduct, Long> {
-    //ORDER PRODUCT REPOSITORY
-
 }

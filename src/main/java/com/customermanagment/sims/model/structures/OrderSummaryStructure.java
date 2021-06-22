@@ -29,7 +29,8 @@ public class OrderSummaryStructure {
         this.VAT = VAT;
     }
 
-    public OrderSummaryStructure() { }
+    public OrderSummaryStructure() {
+    }
 
     //GETTERS AND SETTERS
     public void setVAT(String VAT) {

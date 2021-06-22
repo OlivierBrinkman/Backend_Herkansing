@@ -15,17 +15,22 @@ import java.util.List;
  */
 public interface AppUserService {
 
-     AppUser getAppUserById(long appUserId);
-     AppUserRole getRoleByAppUserId(long appUserId);
+    AppUser getAppUserById(long appUserId);
+
+    AppUserRole getRoleByAppUserId(long appUserId);
 
     List<AppUser> getAppUsers();
-     List<AppUserStructure> getAppUsersForDisplay();
 
-     void deleteAppUser(long userId);
-     void createUserRole(AppUserRole userRole);
-     void deleteUserRole(long userRoleId);
+    List<AppUserStructure> getAppUsersForDisplay();
 
-     long createAppUser(AppUser appUser);
-     String passwordEncoder(String password);
+    void deleteAppUser(long userId);
+
+    void createUserRole(AppUserRole userRole);
+
+    void deleteUserRole(long userRoleId);
+
+    long createAppUser(AppUser appUser);
+
+    String passwordEncoder(String password);
 
 }

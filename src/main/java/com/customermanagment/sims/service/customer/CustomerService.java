@@ -7,21 +7,26 @@ import java.util.List;
 /**
  * Customer Service
  *
- * @author  Olivier Brinkman
+ * @author Olivier Brinkman
  * @version 1.0
- * @since   12/02/2019
+ * @since 12/02/2019
  */
 public interface CustomerService {
 
-     List<Customer> getAllCustomers();
-     Customer getCustomerById(long customerId);
-     CustomerAddress getCustomerAddressByCustomerId(long customerId);
+    List<Customer> getAllCustomers();
 
-     long createCustomer(Customer customer);
-     long createCustomerAddress(CustomerAddress customerAddress);
+    Customer getCustomerById(long customerId);
 
-     void deleteCustomer(long customerId);
-     void insertCustomers();
-     void deleteCustomers();
+    CustomerAddress getCustomerAddressByCustomerId(long customerId);
+
+    long createCustomer(Customer customer);
+
+    long createCustomerAddress(CustomerAddress customerAddress);
+
+    void deleteCustomer(long customerId);
+
+    void insertCustomers();
+
+    void deleteCustomers();
 
 }

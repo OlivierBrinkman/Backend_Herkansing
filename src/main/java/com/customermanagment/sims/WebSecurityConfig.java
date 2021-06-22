@@ -33,7 +33,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter  {
         for(AppUser appUser : appUserService.getAppUsers()) {
             auth.inMemoryAuthentication().withUser(appUser.getUsername()).password(passwordEncoder().encode(appUser.getPassword())).roles(appUserService.getRoleByAppUserId(appUser.getId()).getUserRole());
         }
-
     }
 
     /**

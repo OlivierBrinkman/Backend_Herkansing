@@ -177,7 +177,7 @@ public class InventoryController {
     @GetMapping(value = "/inventory/delete/all")
     public String deleteInventory(Model model) {
         inventoryService.deleteAllInventory();
-        model.addAttribute("brands",inventoryService.getBrands());
+        model.addAttribute("brands", inventoryService.getBrands());
         model.addAttribute("newBrand", new Brand());
         model.addAttribute("totalValue", inventoryService.calculateInventoryValue());
         return "redirect:/inventory";
@@ -191,7 +191,7 @@ public class InventoryController {
     @GetMapping(value = "/inventory/insert/data")
     public String insertInventory(Model model) {
         inventoryService.insertInventory();
-        model.addAttribute("brands",inventoryService.getBrands());
+        model.addAttribute("brands", inventoryService.getBrands());
         model.addAttribute("newBrand", new Brand());
         model.addAttribute("totalValue", inventoryService.calculateInventoryValue());
         return "redirect:/inventory";
@@ -204,11 +204,10 @@ public class InventoryController {
      * @return
      */
     public String navigateProducts(Model model, long brand) {
-        model.addAttribute("products",inventoryService.getProductsByBrandId(brand));
+        model.addAttribute("products", inventoryService.getProductsByBrandId(brand));
         model.addAttribute("selectedBrand", inventoryService.getBrandById(brand));
         model.addAttribute("brandValue", inventoryService.calculateInventoryValueByBrandId(brand));
         return "inventory/Products";
     }
 
 }
-

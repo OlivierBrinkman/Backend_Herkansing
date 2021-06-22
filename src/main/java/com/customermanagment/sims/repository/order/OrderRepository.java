@@ -6,9 +6,9 @@ import org.springframework.stereotype.Repository;
 /**
  * Order Repository
  *
- * @author  Olivier Brinkman
+ * @author Olivier Brinkman
  * @version 1.0
- * @since   12/02/2019
+ * @since 12/02/2019
  */
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
