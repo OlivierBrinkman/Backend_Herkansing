@@ -15,7 +15,7 @@ public class Brand {
     //Attributes
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "ID")
+    @Column(name = "ID", columnDefinition = "serial")
     private long id;
 
     @Column(name = "NAME")

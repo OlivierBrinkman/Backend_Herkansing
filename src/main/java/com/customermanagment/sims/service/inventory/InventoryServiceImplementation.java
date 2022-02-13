@@ -67,6 +67,7 @@ public class InventoryServiceImplementation implements InventoryService {
         return brandRepository.save(brand).getId();
     }
 
+
     /**
      * deletes brand
      * @param id
