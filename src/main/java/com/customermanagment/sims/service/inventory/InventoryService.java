@@ -15,21 +15,32 @@ public interface InventoryService {
 
      List<Brand> getBrands();
      List<Product> getProducts();
-     List<Product> getProductsByBrandId(long brandId);
-     List<Product> getAvailableProducts();
 
-     Brand getBrandById(long id);
-     Brand GetBrandByProductId(long id);
-     Product getProductById(long productId);
-     String calculateInventoryValue();
-     String calculateInventoryValueByBrandId(long brandId);
+    List<Product> getProductsByBrandId(long brandId);
 
-     long createBrand(Brand brand);
-     long createOrUpdateProduct(Product product);
-     void deleteProduct(long id);
-     void deleteBrand(long id);
-     void deleteAllInventory();
-     void insertInventory();
+    List<Product> getAvailableProducts();
+
+    Brand getBrandById(long id);
+
+    Brand GetBrandByProductId(long id);
+
+    Product getProductById(long productId);
+
+    String calculateInventoryValue();
+
+    String calculateInventoryValueByBrandId(long brandId);
+
+    long createBrand(Brand brand);
+
+    long createProduct(Product product);
+
+    void deleteProduct(long id);
+
+    void deleteBrand(long id);
+
+    void deleteAllInventory();
+
+    void insertInventory();
 
 
 }

@@ -390,7 +390,7 @@ body {
 
 .order-info-container {
     background: #f8f9f9;
-    height: 310px;
+    height: 400px;
     border: 1px solid #cfcfcf !important;
     margin: 5px;
 }
@@ -501,6 +501,20 @@ th {
     margin-bottom: 10px;
 }
 
+.home-stats {
+    display: flex;
+    width: 100%;
+    gap: 10px;
+}
+
+.home-stats-item {
+    width: 100%;
+    text-align: center;
+    background: #ffffff;
+    padding: 10px;
+    border-radius: 10px;
+}
+
 .step-bottom-container {
     margin-top: 20px;
 }
@@ -510,7 +524,7 @@ th {
         width: 90%;
         margin-left: 5%;
         margin-right: 5%;
-        margin-top: 40px;
+
     }
 }
 

@@ -1,10 +1,9 @@
 package com.customermanagment.sims;
-import com.customermanagment.sims.model.tables.appUser.AppUser;
+
 import com.customermanagment.sims.service.appUser.AppUserServiceImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -30,9 +29,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter  {
      */
     @Override protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication().withUser("admin").password(passwordEncoder().encode("admin")).roles("ADMIN");
-        for(AppUser appUser : appUserService.getAppUsers()) {
-            auth.inMemoryAuthentication().withUser(appUser.getUsername()).password(passwordEncoder().encode(appUser.getPassword())).roles(appUserService.getRoleByAppUserId(appUser.getId()).getUserRole());
-        }
     }
 
     /**
@@ -45,11 +41,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter  {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/js/**", "/css/**", "/downloads/**").permitAll()
-                .antMatchers("/users/**").hasRole("ADMIN")
-                .antMatchers("/customers/**").hasRole("ADMIN")
-                .antMatchers("/inventory/**").hasAnyRole("ADMIN", "EMPLOYEE")
-                .antMatchers("/products/**").hasAnyRole("ADMIN", "EMPLOYEE")
-                .antMatchers("/orders/**").hasRole("ADMIN")
+                .antMatchers("/users/**").permitAll()//.hasRole("ADMIN") => TIJDELIJK
+                .antMatchers("/brands/**").permitAll()//.hasRole("ADMIN") => TIJDELIJK
+                .antMatchers("/customers/**").permitAll()//.hasRole("ADMIN") => TIJDELIJK
+                .antMatchers("/inventory/**").permitAll()//.hasAnyRole("ADMIN", "EMPLOYEE") => TIJDELIJK
+                .antMatchers("/products/**").permitAll()//.hasAnyRole("ADMIN", "EMPLOYEE") => TIJDELIJK
+                .antMatchers("/orders/**").permitAll()//.hasRole("ADMIN") => TIJDELIJK
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login_secure").permitAll()
@@ -61,14 +58,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter  {
 
     }
 
-    /**
-     * sets authentication manager
-     * @return
-     * @throws Exception
-     */
-    @Override @Bean public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
 
     /**
      * encodes password

@@ -89,11 +89,12 @@ public class InventoryServiceImplementation implements InventoryService {
 
     /**
      * create or update product
+     *
      * @param product
      * @return
      */
     @Override
-    public long createOrUpdateProduct(Product product) {
+    public long createProduct(Product product) {
         return productRepository.save(product).getId();
     }
 

@@ -63,11 +63,12 @@ public class OrderServiceImplementation implements OrderService {
 
     /**
      * creates order
+     *
      * @param order
      */
     @Override
-    public void createOrder(Order order) {
-        orderRepository.save(order);
+    public long createOrder(Order order) {
+        return orderRepository.save(order).getId();
     }
 
     /**
@@ -109,7 +110,7 @@ public class OrderServiceImplementation implements OrderService {
         orderProductRepository.save(orderProduct);
         Product p = inventoryService.getProductById(orderProduct.getProductId());
         p.setAmount(p.getAmount() - 1);
-        inventoryService.createOrUpdateProduct(p);
+        inventoryService.createProduct(p);
     }
 
     /**
@@ -136,7 +137,7 @@ public class OrderServiceImplementation implements OrderService {
      * @throws Exception
      */
     @Override
-    public List<Product> getProductsByOrderId(long orderId) throws Exception {
+    public List<Product> getProductsByOrderId(long orderId) {
         List<Product> products = new ArrayList<>();
 
         for (OrderProduct op : orderProductRepository.findAll()) {
@@ -145,12 +146,11 @@ public class OrderServiceImplementation implements OrderService {
                     Product p = inventoryService.getProductById(op.getProductId());
                     products.add(p);
                 } catch (Exception e) {
-                    throw new Exception("Some products dont exists anymore, your order will be deleted.");
+                    return null;
                 }
 
             }
         }
-
         return products;
     }
 

@@ -86,7 +86,7 @@ public class InventoryController {
      */
     @PostMapping(value = "/inventory/product/new")
     public String productCreate(@ModelAttribute Product product, Model model) {
-        inventoryService.createOrUpdateProduct(product);
+        inventoryService.createProduct(product);
         return navigateProducts(model, product.getBrand());
     }
 
@@ -116,7 +116,7 @@ public class InventoryController {
         if (result.hasErrors()) {
             return navigateProducts(model, product.getBrand());
         }
-        inventoryService.createOrUpdateProduct(product);
+        inventoryService.createProduct(product);
         return navigateProducts(model, product.getBrand());
     }
 

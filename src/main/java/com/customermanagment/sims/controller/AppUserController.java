@@ -1,7 +1,7 @@
 package com.customermanagment.sims.controller;
+
 import com.customermanagment.sims.model.tables.appUser.AppUser;
 import com.customermanagment.sims.model.tables.appUser.AppUserRole;
-import com.customermanagment.sims.model.tables.appUser.Roles;
 import com.customermanagment.sims.service.appUser.AppUserServiceImplementation;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -52,26 +52,8 @@ public class AppUserController {
         model.addAttribute("newAppUser", new AppUser());
         model.addAttribute("newAppUserRole", new AppUserRole());
         return "appUser/AppUserCreate";
-    }
 
-    /**
-     * creates App_User
-     *
-     * @param appUser
-     * @param appUserRole
-     * @return
-     */
-    @PostMapping("/users/new")
-    public String userCreate(@ModelAttribute AppUser appUser, @ModelAttribute AppUserRole appUserRole) {
-        for (Roles role : Roles.values()) {
-            if (appUserRole.getUserRole() == role.toString()) {
-                appUserRole.setUserRole(role.toString());
-            }
-        }
-        long userId = appUserService.createAppUser(appUser);
-        appUserRole.setUserId(userId);
-        appUserService.createUserRole(appUserRole);
-        return "redirect:/users";
+
     }
 
     /**

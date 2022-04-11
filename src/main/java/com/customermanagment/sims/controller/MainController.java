@@ -1,5 +1,9 @@
 package com.customermanagment.sims.controller;
 
+import com.customermanagment.sims.service.appUser.AppUserServiceImplementation;
+import com.customermanagment.sims.service.customer.CustomerServiceImplementation;
+import com.customermanagment.sims.service.inventory.InventoryServiceImplementation;
+import com.customermanagment.sims.service.order.OrderServiceImplementation;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -18,16 +22,36 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class MainController {
 
+    InventoryServiceImplementation inventoryService;
+    AppUserServiceImplementation userService;
+    CustomerServiceImplementation customerService;
+    OrderServiceImplementation orderService;
+
+    public MainController(AppUserServiceImplementation userService, InventoryServiceImplementation inventoryService, CustomerServiceImplementation customerService, OrderServiceImplementation orderService) {
+        this.inventoryService = inventoryService;
+        this.customerService = customerService;
+        this.orderService = orderService;
+        this.userService = userService;
+    }
 
     /**
      * return home page
+     *
      * @param model
      * @return
      */
     @GetMapping("/")
     public String index(Model model) {
+        model.addAttribute("orders", orderService.getOrders().size());
+        model.addAttribute("customers", customerService.getAllCustomers().size());
+
+        model.addAttribute("brands", inventoryService.getBrands().size());
+        model.addAttribute("value", inventoryService.calculateInventoryValue());
+        model.addAttribute("users", userService.getAppUsers().size());
+
         return initializeIndex(model);
     }
+
 
     /**
      * logs user out
