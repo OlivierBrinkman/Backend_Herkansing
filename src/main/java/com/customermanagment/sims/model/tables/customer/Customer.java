@@ -80,10 +80,6 @@ public class Customer {
         this.customerSince = customerSince;
     }
 
-    public String getCustomerSince() {
-        return customerSince;
-    }
-
     //To string
     @Override
     public String toString() {

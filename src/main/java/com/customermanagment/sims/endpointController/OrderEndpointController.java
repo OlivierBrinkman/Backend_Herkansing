@@ -1,6 +1,9 @@
 package com.customermanagment.sims.endpointController;
 
+import com.customermanagment.sims.model.structures.OrderSummaryStructure;
 import com.customermanagment.sims.model.tables.order.Order;
+import com.customermanagment.sims.model.tables.order.OrderProduct;
+import com.customermanagment.sims.model.tables.product.Product;
 import com.customermanagment.sims.service.order.OrderServiceImplementation;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,10 +12,8 @@ import java.util.List;
 @RestController
 public class OrderEndpointController {
 
-    //Service initialization
     private final OrderServiceImplementation service;
 
-    //Constructor
     public OrderEndpointController(OrderServiceImplementation service) {
         this.service = service;
     }
@@ -20,6 +21,11 @@ public class OrderEndpointController {
     @GetMapping("/orders/all")
     public List<Order> getAllOrders() {
         return service.getOrders();
+    }
+
+    @GetMapping("/orders/{id}")
+    public OrderSummaryStructure getOrderDetails(@PathVariable long id) {
+        return service.getSummaryStructure(id);
     }
 
     @PostMapping("/orders/create")
@@ -40,9 +46,31 @@ public class OrderEndpointController {
         return "Order and associated items have been removed";
     }
 
+    @GetMapping("/orders/{id}/products")
+    public List<Product> getProductsByOrderId(@PathVariable long id) {
+        return service.getProductsByOrderId(id);
+    }
+
     @GetMapping("/orders/{id}/price")
     public int getTotalPriceOrderById(@PathVariable long id) {
         int totalOrderPrice = 0;
+        List<Product> orderProducts = service.getProductsByOrderId(id);
+        for (Product product : orderProducts) {
+            totalOrderPrice = totalOrderPrice + product.getPrice();
+        }
         return totalOrderPrice;
     }
+
+    @PostMapping("/orders/{id}/add/{productId}")
+    public long addProductToOrder(@PathVariable long id, @PathVariable long productId) {
+        OrderProduct productToAdd = new OrderProduct(service.getProductsByOrderId(id).size(), productId, id);
+        return service.createOrderProduct(productToAdd);
+    }
+
+    @DeleteMapping("/orders/items/{orderProductId}")
+    public String deleteOrderProductFromOrder(@PathVariable long orderProductId) {
+        service.deleteProductByOrderId(orderProductId);
+        return "Product have been removed from the order.";
+    }
+
 }

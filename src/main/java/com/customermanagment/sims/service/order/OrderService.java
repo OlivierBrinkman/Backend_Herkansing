@@ -25,21 +25,21 @@ public interface OrderService {
 
      ProductStructure getProductSummary(long productId);
 
-     OrderSummaryStructure getSummaryStructure(long orderId) throws Exception;
+     OrderSummaryStructure getSummaryStructure(long orderId);
 
-     Order getOrderById(long orderId);
+    Order getOrderById(long orderId);
 
-     long createOrder(Order order);
+    long createOrder(Order order);
 
-     void deleteOrder(long orderId);
+    void deleteOrder(long orderId);
 
-     void createOrderProduct(OrderProduct orderProduct);
+    long createOrderProduct(OrderProduct orderProduct);
 
-     void deleteOrderProductsByOrderId(long orderId);
+    void deleteOrderProductsByOrderId(long orderId);
 
-     void deleteOrders();
+    void deleteProductByOrderId(long orderProductId);
 
-     void insertOrders() throws Exception;
+    void deleteOrders();
 
-     void clearIncompleteOrders();
+    void insertOrders() throws Exception;
 }

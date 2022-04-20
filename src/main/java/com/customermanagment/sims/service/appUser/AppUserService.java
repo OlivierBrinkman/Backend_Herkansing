@@ -23,7 +23,7 @@ public interface AppUserService {
 
     List<AppUserStructure> getAppUsersForDisplay();
 
-    void deleteAppUser(long userId);
+    String deleteAppUser(long userId);
 
     void createUserRole(AppUserRole userRole);
 

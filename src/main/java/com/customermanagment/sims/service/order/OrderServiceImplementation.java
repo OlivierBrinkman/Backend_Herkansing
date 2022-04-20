@@ -32,7 +32,6 @@ import java.util.List;
 public class OrderServiceImplementation implements OrderService {
 
     Utility utility = new Utility();
-
     final OrderRepository orderRepository;
     final OrderProductRepository orderProductRepository;
     final InventoryServiceImplementation inventoryService;
@@ -103,14 +102,16 @@ public class OrderServiceImplementation implements OrderService {
 
     /**
      * creates order product
+     *
      * @param orderProduct
      */
     @Override
-    public void createOrderProduct(OrderProduct orderProduct) {
-        orderProductRepository.save(orderProduct);
+    public long createOrderProduct(OrderProduct orderProduct) {
+        long id = orderProductRepository.save(orderProduct).getId();
         Product p = inventoryService.getProductById(orderProduct.getProductId());
         p.setAmount(p.getAmount() - 1);
         inventoryService.createProduct(p);
+        return id;
     }
 
     /**
@@ -127,6 +128,11 @@ public class OrderServiceImplementation implements OrderService {
                 orderProductRepository.deleteById(op.getId());
             }
         }
+    }
+
+    @Override
+    public void deleteProductByOrderId(long orderProductId) {
+        orderProductRepository.deleteById(orderProductId);
     }
 
     /**
@@ -204,12 +210,13 @@ public class OrderServiceImplementation implements OrderService {
 
     /**
      * get structure for order summary
+     *
      * @param orderId
      * @return
      * @throws Exception
      */
     @Override
-    public OrderSummaryStructure getSummaryStructure(long orderId) throws Exception {
+    public OrderSummaryStructure getSummaryStructure(long orderId) {
         NumberFormat formatter = new DecimalFormat("#0.00");
         OrderSummaryStructure orderSummaryStructure = new OrderSummaryStructure();
         Order order = orderRepository.findById(orderId).get();
@@ -252,18 +259,5 @@ public class OrderServiceImplementation implements OrderService {
         utility.insertOrders(customers, products, orderProductRepository, orderRepository, this);
     }
 
-    /**
-     * Deletes all incomplete orders
-     *
-     * @throws Exception
-     */
-    @Override
-    public void clearIncompleteOrders() {
-        List<Order> orders = orderRepository.findAll();
-        for (Order order : orders) {
-            if (order.getTotalPrice() == 0) {
-                orderRepository.deleteById(order.getId());
-            }
-        }
-    }
+
 }

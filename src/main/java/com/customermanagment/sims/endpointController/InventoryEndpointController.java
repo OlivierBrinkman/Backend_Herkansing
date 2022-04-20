@@ -19,26 +19,31 @@ public class InventoryEndpointController {
     }
 
     //Brand Endpoints
-    @GetMapping("/brands/all")
+    @GetMapping("/brands")
     public List<Brand> getAllBrands() {
         return service.getBrands();
     }
 
-    @PostMapping("/brands/create")
+    @GetMapping("/brands/{id}")
+    public Brand getBrandById(@PathVariable long id) {
+        return service.getBrandById(id);
+    }
+
+    @PostMapping("/brands")
     public long createBrand(@RequestBody Brand brand) {
         return service.createBrand(brand);
     }
 
-    @PutMapping("/brands/update/{id}")
-    public Brand updateBrand(@RequestBody Brand brand, @PathVariable long id) {
+    @PutMapping("/brands/{id}")
+    public Brand updateBrandById(@RequestBody Brand brand, @PathVariable long id) {
         brand.setId(id);
         service.deleteBrand(id);
         Brand updatedBrand = service.getBrandById(service.createBrand(brand));
         return updatedBrand;
     }
 
-    @DeleteMapping("/brands/delete/{id}")
-    public String deleteBrand(@PathVariable long id) {
+    @DeleteMapping("/brands/{id}")
+    public String deleteBrandById(@PathVariable long id) {
         List<Product> products = service.getProductsByBrandId(id);
         for (Product product : products) {
             service.deleteProduct(product.getId());
@@ -48,26 +53,25 @@ public class InventoryEndpointController {
     }
 
     //Product Endpoints
-    @GetMapping("/brands/{brandId}/products/all")
+    @GetMapping("/brands/{id}/products/")
     public List<Product> getProductsByBrandId(@PathVariable long brandId) {
         return service.getProductsByBrandId(brandId);
     }
 
-    //Hier is brandId niet nodig want die zit al in de request body die opgemaakt wordt op /products/all
-    @PostMapping("/brands/{brandId}/products/all")
-    public long createProduct(@RequestBody Product product, @PathVariable long brandId) {
+    @PostMapping("/brands/{id}/products/")
+    public long createProduct(@RequestBody Product product) {
         return service.createProduct(product);
     }
 
-    @PutMapping("/brands/{brandId}/products/{id}")
-    public Product updateProduct(@RequestBody Product product, @PathVariable long brandId, @PathVariable long id) {
-        product.setId(id);
+    @PutMapping("/brands/{id}/products/{productId}")
+    public Product updateProductById(@RequestBody Product product, @PathVariable long productId, @PathVariable long id) {
+        product.setId(productId);
         Product updatedProduct = service.getProductById(service.createProduct(product));
         return updatedProduct;
     }
 
-    @DeleteMapping("/brands/{brandId}/products/{id}")
-    public String deleteProduct(@PathVariable long id) {
+    @DeleteMapping("/brands/{id}/products/{productId}")
+    public String deleteProductById(@PathVariable long id, @PathVariable long productId) {
         service.deleteProduct(id);
         return "Product have been removed";
     }

@@ -76,6 +76,7 @@ public class CustomerServiceImplementation implements CustomerService {
 
     /**
      * deletes customer
+     *
      * @param id
      */
     @Override
@@ -84,7 +85,18 @@ public class CustomerServiceImplementation implements CustomerService {
     }
 
     /**
+     * deletes customer
+     *
+     * @param id
+     */
+    @Override
+    public void deleteCustomerAddress(long id) {
+        addressRepo.deleteById(id);
+    }
+
+    /**
      * creates customer address
+     *
      * @param customerAddress
      * @return
      */

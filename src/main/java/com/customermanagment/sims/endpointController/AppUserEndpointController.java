@@ -2,17 +2,17 @@ package com.customermanagment.sims.endpointController;
 
 import com.customermanagment.sims.model.tables.appUser.AppUser;
 import com.customermanagment.sims.service.appUser.AppUserServiceImplementation;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Validated
 @RestController
 public class AppUserEndpointController {
 
-    //Service initialization
     private final AppUserServiceImplementation service;
 
-    //Constructor
     public AppUserEndpointController(AppUserServiceImplementation service) {
         this.service = service;
     }
@@ -22,22 +22,26 @@ public class AppUserEndpointController {
         return service.getAppUsers();
     }
 
+    @GetMapping("/users/{id}")
+    public AppUser getUserById(@PathVariable long id) {
+        return service.getAppUserById(id);
+    }
+
     @PostMapping("/users/create")
     public long createUser(@RequestBody AppUser appUser) {
         return service.createAppUser(appUser);
     }
 
     @PutMapping("/users/{id}")
-    public AppUser updateUser(@RequestBody AppUser appUser, @PathVariable long id) {
+    public long updateUserById(@RequestBody AppUser appUser, @PathVariable long id) {
         appUser.setId(id);
-        AppUser updatedAppUser = service.getAppUserById(service.createAppUser(appUser));
-        return updatedAppUser;
+        return service.createAppUser(appUser);
     }
 
     @DeleteMapping("/users/{id}")
-    public String deleteUser(@PathVariable long id) {
+    public String deleteUserById(@PathVariable long id) {
         service.deleteAppUser(id);
-        return "User have been removed";
+        return "User has been deleted";
     }
 
 }

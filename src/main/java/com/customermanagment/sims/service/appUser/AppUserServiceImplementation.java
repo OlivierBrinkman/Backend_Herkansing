@@ -110,11 +110,13 @@ public class AppUserServiceImplementation implements AppUserService {
 
     /**
      * deletes app user by id
+     *
      * @param userId
      */
     @Override
-    public void deleteAppUser(long userId) {
+    public String deleteAppUser(long userId) {
         appUserRepository.deleteById(userId);
+        return "User has been deleted";
     }
 
     /**
