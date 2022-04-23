@@ -80,8 +80,9 @@ public class CustomerServiceImplementation implements CustomerService {
      * @param id
      */
     @Override
-    public void deleteCustomer(long id) {
+    public String deleteCustomer(long id) {
         customerRepo.deleteById(id);
+        return "Customer has been deleted";
     }
 
     /**

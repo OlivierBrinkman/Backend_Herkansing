@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.isA;
@@ -23,22 +24,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(AppUserEndpointController.class)
-
-public class AppUserEndpointControllerTest {
+public class AppUserEndpointTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
     private AppUserServiceImplementation service;
-
-    public static String asJsonString(final Object obj) {
-        try {
-            return new ObjectMapper().writeValueAsString(obj);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     @Test
     void isMockMvcInContext() {
@@ -50,13 +42,12 @@ public class AppUserEndpointControllerTest {
         mockMvc = MockMvcBuilders.standaloneSetup(service).build();
     }
 
-    @Test
-    public void getAllUsers() throws Exception {
-        mockMvc.perform(
-                        get("/users/all"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.*", isA(ArrayList.class))).andExpect(jsonPath("$.*", hasSize(0)));
+    public static String asJsonString(final Object obj) {
+        try {
+            return new ObjectMapper().writeValueAsString(obj);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
@@ -96,9 +87,20 @@ public class AppUserEndpointControllerTest {
         when(service.deleteAppUser(123)).thenReturn("Student is deleted");
         mockMvc.perform(MockMvcRequestBuilders.delete("/users/" + id))
                 .andExpect(status().isOk())
-                .andExpect(status().isOk())
                 .andReturn();
     }
 
-
+    @Test
+    public void getAllUsers() throws Exception {
+        List<AppUser> users = new ArrayList<>();
+        AppUser user1 = new AppUser(1, "John Doe", "Hallo123");
+        AppUser user2 = new AppUser(2, "Samantha Doe", "Hello123");
+        users.add(user1);
+        users.add(user2);
+        when(service.getAppUsers()).thenReturn(users);
+        mockMvc.perform(get("/users/all"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.*", isA(ArrayList.class))).andExpect(jsonPath("$.*", hasSize(2)));
+    }
 }

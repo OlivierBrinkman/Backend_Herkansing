@@ -3,42 +3,45 @@ package com.customermanagment.sims.endpointController;
 import com.customermanagment.sims.model.tables.customer.Customer;
 import com.customermanagment.sims.model.tables.customer.CustomerAddress;
 import com.customermanagment.sims.service.customer.CustomerServiceImplementation;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Validated
 @RestController
 public class CustomerEndpointController {
 
-    //Service initialization
     private final CustomerServiceImplementation service;
 
-    //Constructor
     public CustomerEndpointController(CustomerServiceImplementation service) {
         this.service = service;
     }
 
-    //Customer Endpoints
     @GetMapping("/customers/all")
-    public List<Customer> getAllCustomers() {
-        return service.getAllCustomers();
+    public ResponseEntity<List> getAllCustomers() {
+        return new ResponseEntity<>(service.getAllCustomers(), HttpStatus.OK);
     }
 
     @GetMapping("/customers/{id}")
-    public Customer getCustomerById(@PathVariable long id) {
-        return service.getCustomerById(id);
+    public ResponseEntity<Customer> getCustomerById(@PathVariable long id) {
+        return new ResponseEntity<>(service.getCustomerById(id), HttpStatus.FOUND);
+
     }
 
     @PostMapping("/customers/create")
-    public long createCustomer(@RequestBody Customer customer) {
-        return service.createCustomer(customer);
+    public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
+        return new ResponseEntity<>(service.getCustomerById(service.createCustomer(customer)), HttpStatus.CREATED);
+
     }
 
     @PutMapping("/customers/{id}")
-    public Customer updateCustomerById(@RequestBody Customer customer, @PathVariable long id) {
+    public ResponseEntity<Customer> updateCustomerById(@RequestBody Customer customer, @PathVariable long id) {
         customer.setId(id);
         Customer updatedCustomer = service.getCustomerById(service.createCustomer(customer));
-        return updatedCustomer;
+        return new ResponseEntity<>(updatedCustomer, HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("/customers/{id}")
@@ -48,22 +51,21 @@ public class CustomerEndpointController {
         return "Customer have been removed";
     }
 
-    //CustomerAddress Endpoints
     @GetMapping("/customers/{id}/address}")
-    public CustomerAddress getAddressByCustomerId(@PathVariable long id) {
-        return service.getCustomerAddressByCustomerId(id);
+    public ResponseEntity<CustomerAddress> getAddressByCustomerId(@PathVariable long id) {
+        return new ResponseEntity<>(service.getCustomerAddressByCustomerId(id), HttpStatus.FOUND);
     }
 
     @PostMapping("/customers/{id}/address/create}")
-    public long createCustomerAddressById(@RequestBody Customer customer) {
-        return service.createCustomer(customer);
+    public ResponseEntity<CustomerAddress> createCustomerAddressById(@RequestBody CustomerAddress customerAddress) {
+        return new ResponseEntity<>(service.getCustomerAddressByCustomerId(service.getCustomerById(service.createCustomerAddress(customerAddress)).getId()), HttpStatus.CREATED);
     }
 
     @PutMapping("/customers/{id}/address")
-    public CustomerAddress updateCustomerAddressById(@RequestBody CustomerAddress customerAddress, @PathVariable long id) {
+    public ResponseEntity<CustomerAddress> updateCustomerAddressById(@RequestBody CustomerAddress customerAddress, @PathVariable long id) {
         customerAddress.setId(id);
         CustomerAddress updatedCustomerAddress = service.getCustomerAddressByCustomerId(service.createCustomerAddress(customerAddress));
-        return updatedCustomerAddress;
+        return new ResponseEntity<CustomerAddress>(updatedCustomerAddress, HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("/customers/address/{id}")

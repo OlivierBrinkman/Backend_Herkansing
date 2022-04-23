@@ -70,11 +70,13 @@ public class InventoryServiceImplementation implements InventoryService {
 
     /**
      * deletes brand
+     *
      * @param id
      */
     @Override
-    public void deleteBrand(long id) {
+    public String deleteBrand(long id) {
         brandRepository.deleteById(id);
+        return "Brand has been deleted";
     }
 
     /**

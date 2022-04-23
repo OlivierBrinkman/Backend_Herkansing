@@ -3,10 +3,12 @@ package com.customermanagment.sims.endpointController;
 import com.customermanagment.sims.model.tables.product.Brand;
 import com.customermanagment.sims.model.tables.product.Product;
 import com.customermanagment.sims.service.inventory.InventoryServiceImplementation;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Validated
 @RestController
 public class InventoryEndpointController {
 

@@ -21,13 +21,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
-/**
- * Order Service implementation.
- *
- * @author Olivier Brinkman
- * @version 1.0
- * @since 12/02/2019
- */
+
 @Service
 public class OrderServiceImplementation implements OrderService {
 
@@ -40,16 +34,6 @@ public class OrderServiceImplementation implements OrderService {
     final CustomerRepository customerRepository;
     final CustomerAddressRepository customerAddressRepository;
 
-    /**
-     * service constructor
-     * @param orderRepository
-     * @param orderProductRepository
-     * @param inventoryService
-     * @param customerRepository
-     * @param customerAddressRepository
-     * @param brandRepository
-     * @param productRepository
-     */
     public OrderServiceImplementation(OrderRepository orderRepository, OrderProductRepository orderProductRepository, InventoryServiceImplementation inventoryService, CustomerRepository customerRepository, CustomerAddressRepository customerAddressRepository, BrandRepository brandRepository, ProductRepository productRepository) {
         this.orderRepository = orderRepository;
         this.orderProductRepository = orderProductRepository;
@@ -60,51 +44,28 @@ public class OrderServiceImplementation implements OrderService {
         this.productRepository = productRepository;
     }
 
-    /**
-     * creates order
-     *
-     * @param order
-     */
     @Override
     public long createOrder(Order order) {
         return orderRepository.save(order).getId();
     }
 
-    /**
-     * deletes order by id
-     * @param orderId
-     */
     @Override
-    public void deleteOrder(long orderId) {
+    public String deleteOrder(long orderId) {
         deleteOrderProductsByOrderId(orderId);
         orderRepository.deleteById(orderId);
+        return "Order has been deleted";
     }
 
-    /**
-     * get order by id
-     * @param orderId
-     * @return
-     */
     @Override
     public Order getOrderById(long orderId) {
         return orderRepository.findById(orderId).get();
     }
 
-    /**
-     * get all orders
-     *
-     * @return
-     */
     @Override
     public List<Order> getOrders() {
         return orderRepository.findAll();
     }
 
-    /**
-     * creates order product
-     *
-     * @param orderProduct
-     */
     @Override
     public long createOrderProduct(OrderProduct orderProduct) {
         long id = orderProductRepository.save(orderProduct).getId();
@@ -114,34 +75,23 @@ public class OrderServiceImplementation implements OrderService {
         return id;
     }
 
-    /**
-     * delete order products by order id
-     * @param orderId
-     */
     @Override
-    public void deleteOrderProductsByOrderId(long orderId) {
+    public String deleteOrderProductsByOrderId(long orderId) {
         List<OrderProduct> allOrderProducts = orderProductRepository.findAll();
-        Order order = getOrderById(orderId);
-
         for (OrderProduct op : allOrderProducts) {
             if (op.getOrderId() == orderId) {
                 orderProductRepository.deleteById(op.getId());
             }
         }
+        return "All products are removed the order";
     }
 
     @Override
-    public void deleteProductByOrderId(long orderProductId) {
+    public String deleteProductByOrderId(long orderProductId) {
         orderProductRepository.deleteById(orderProductId);
+        return "Product has been removed from the order";
     }
 
-    /**
-     * get products by order id
-     *
-     * @param orderId
-     * @return
-     * @throws Exception
-     */
     @Override
     public List<Product> getProductsByOrderId(long orderId) {
         List<Product> products = new ArrayList<>();
@@ -231,12 +181,10 @@ public class OrderServiceImplementation implements OrderService {
         return orderSummaryStructure;
     }
 
-    /**
-     * deletes all orders
-     */
     @Override
-    public void deleteOrders() {
+    public String deleteOrders() {
         utility.deleteOrders(orderRepository, orderProductRepository);
+        return "Orders are deleted";
     }
 
     /**

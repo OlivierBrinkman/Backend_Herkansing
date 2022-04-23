@@ -1,8 +1,6 @@
 package com.customermanagment.sims;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
 /**
  * Customer_Managment_Application class.
  * @author  Olivier Brinkman

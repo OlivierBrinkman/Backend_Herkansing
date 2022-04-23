@@ -31,15 +31,15 @@ public interface OrderService {
 
     long createOrder(Order order);
 
-    void deleteOrder(long orderId);
+    String deleteOrder(long orderId);
 
     long createOrderProduct(OrderProduct orderProduct);
 
-    void deleteOrderProductsByOrderId(long orderId);
+    String deleteOrderProductsByOrderId(long orderId);
 
-    void deleteProductByOrderId(long orderProductId);
+    String deleteProductByOrderId(long orderProductId);
 
-    void deleteOrders();
+    String deleteOrders();
 
     void insertOrders() throws Exception;
 }

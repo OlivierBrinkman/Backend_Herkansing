@@ -5,10 +5,12 @@ import com.customermanagment.sims.model.tables.order.Order;
 import com.customermanagment.sims.model.tables.order.OrderProduct;
 import com.customermanagment.sims.model.tables.product.Product;
 import com.customermanagment.sims.service.order.OrderServiceImplementation;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Validated
 @RestController
 public class OrderEndpointController {
 

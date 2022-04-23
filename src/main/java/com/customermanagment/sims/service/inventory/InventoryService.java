@@ -36,7 +36,7 @@ public interface InventoryService {
 
     void deleteProduct(long id);
 
-    void deleteBrand(long id);
+    String deleteBrand(long id);
 
     void deleteAllInventory();
 

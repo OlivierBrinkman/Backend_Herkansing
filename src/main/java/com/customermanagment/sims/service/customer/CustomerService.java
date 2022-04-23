@@ -18,7 +18,8 @@ public interface CustomerService {
     CustomerAddress getCustomerAddressByCustomerId(long customerId);
     long createCustomer(Customer customer);
     long createCustomerAddress(CustomerAddress customerAddress);
-    void deleteCustomer(long customerId);
+
+    String deleteCustomer(long customerId);
 
     void deleteCustomerAddress(long customerId);
 

@@ -2,6 +2,8 @@ package com.customermanagment.sims.endpointController;
 
 import com.customermanagment.sims.model.tables.appUser.AppUser;
 import com.customermanagment.sims.service.appUser.AppUserServiceImplementation;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,8 +20,9 @@ public class AppUserEndpointController {
     }
 
     @GetMapping("/users/all")
-    public List<AppUser> getAllUsers() {
-        return service.getAppUsers();
+    public ResponseEntity<List> getAllUsers() {
+        List<AppUser> users = service.getAppUsers();
+        return new ResponseEntity<List>(users, HttpStatus.OK);
     }
 
     @GetMapping("/users/{id}")
