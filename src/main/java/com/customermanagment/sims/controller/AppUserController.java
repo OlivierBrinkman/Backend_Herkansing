@@ -1,7 +1,7 @@
 package com.customermanagment.sims.controller;
 
-import com.customermanagment.sims.model.tables.appUser.AppUser;
-import com.customermanagment.sims.model.tables.appUser.AppUserRole;
+import com.customermanagment.sims.model.appUser.AppUser;
+import com.customermanagment.sims.model.appUser.AppUserRole;
 import com.customermanagment.sims.service.appUser.AppUserServiceImplementation;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -1,7 +1,8 @@
-package com.customermanagment.sims.endpointController;
+package com.customermanagment.sims.IntergrationTests;
 
-import com.customermanagment.sims.model.tables.customer.Customer;
-import com.customermanagment.sims.model.tables.customer.CustomerAddress;
+import com.customermanagment.sims.controllerEndpoints.CustomerEndpointController;
+import com.customermanagment.sims.model.customer.Customer;
+import com.customermanagment.sims.model.customer.CustomerAddress;
 import com.customermanagment.sims.service.customer.CustomerServiceImplementation;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Assert;
@@ -25,7 +26,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 @WebMvcTest(CustomerEndpointController.class)
 public class CustomerEndpointTest {
 

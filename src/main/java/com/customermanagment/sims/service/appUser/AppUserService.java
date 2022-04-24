@@ -1,8 +1,8 @@
 package com.customermanagment.sims.service.appUser;
 
-import com.customermanagment.sims.model.structures.AppUserStructure;
-import com.customermanagment.sims.model.tables.appUser.AppUser;
-import com.customermanagment.sims.model.tables.appUser.AppUserRole;
+import com.customermanagment.sims.model.appUser.AppUser;
+import com.customermanagment.sims.model.appUser.AppUserRole;
+import com.customermanagment.sims.structures.AppUserStructure;
 
 import java.util.List;
 

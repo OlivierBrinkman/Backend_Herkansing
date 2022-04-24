@@ -1,6 +1,6 @@
 package com.customermanagment.sims.controller;
-import com.customermanagment.sims.model.tables.customer.Customer;
-import com.customermanagment.sims.model.tables.customer.CustomerAddress;
+import com.customermanagment.sims.model.customer.Customer;
+import com.customermanagment.sims.model.customer.CustomerAddress;
 import com.customermanagment.sims.service.customer.CustomerServiceImplementation;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

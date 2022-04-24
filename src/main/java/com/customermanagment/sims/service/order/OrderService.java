@@ -1,10 +1,10 @@
 package com.customermanagment.sims.service.order;
 
-import com.customermanagment.sims.model.structures.OrderSummaryStructure;
-import com.customermanagment.sims.model.structures.ProductStructure;
-import com.customermanagment.sims.model.tables.order.Order;
-import com.customermanagment.sims.model.tables.order.OrderProduct;
-import com.customermanagment.sims.model.tables.product.Product;
+import com.customermanagment.sims.model.order.Order;
+import com.customermanagment.sims.model.order.OrderProduct;
+import com.customermanagment.sims.model.product.Product;
+import com.customermanagment.sims.structures.OrderSummaryStructure;
+import com.customermanagment.sims.structures.ProductStructure;
 
 import java.util.List;
 

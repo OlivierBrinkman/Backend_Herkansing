@@ -1,18 +1,11 @@
-package com.customermanagment.sims.model.tables.appUser;
+package com.customermanagment.sims.model.appUser;
 import javax.persistence.*;
 import java.io.Serializable;
-/**
- * App_User_Role Entity
- *
- * @author Olivier Brinkman
- * @version 1.0
- * @since 12/02/2019
- */
+
 @Entity
 @Table(name = "USER_ROLES")
 public class AppUserRole implements Serializable {
 
-    //Attributes
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID")
@@ -24,8 +17,6 @@ public class AppUserRole implements Serializable {
     @Column(name = "USER_ROLE", nullable = false)
     private String userRole;
 
-
-    //Constructors
     public AppUserRole(long id, long userId, String userRole) {
         this.id = id;
         this.userId = userId;
@@ -35,7 +26,6 @@ public class AppUserRole implements Serializable {
     public AppUserRole() {
     }
 
-    //Getters and setters
     public long getId() {
         return id;
     }
@@ -56,11 +46,6 @@ public class AppUserRole implements Serializable {
         return userRole;
     }
 
-    public void setUserRole(String userRole) {
-        this.userRole = userRole;
-    }
-
-    //To string
     @Override
     public String toString() {
         return "App_User_Role{" +

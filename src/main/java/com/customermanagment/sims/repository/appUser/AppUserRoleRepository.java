@@ -1,5 +1,5 @@
 package com.customermanagment.sims.repository.appUser;
-import com.customermanagment.sims.model.tables.appUser.AppUserRole;
+import com.customermanagment.sims.model.appUser.AppUserRole;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 /**

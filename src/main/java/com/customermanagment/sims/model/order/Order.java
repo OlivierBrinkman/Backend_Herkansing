@@ -1,17 +1,9 @@
-package com.customermanagment.sims.model.tables.order;
+package com.customermanagment.sims.model.order;
 import javax.persistence.*;
-/**
- * Order Entity
- *
- * @author Olivier Brinkman
- * @version 1.0
- * @since 12/02/2019
- */
 @Entity
 @Table(name = "ORDERS")
 public class Order {
 
-    //Attributes
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID")
@@ -26,8 +18,6 @@ public class Order {
     @Column(name = "DATE_CREATED")
     private String dateCreated;
 
-
-    //Constructors
     public Order(long id, long customerId, int totalPrice, String dateCreated) {
         this.id = id;
         this.customerId = customerId;
@@ -38,7 +28,6 @@ public class Order {
     public Order() {
     }
 
-    //Getters and Setters
     public long getId() {
         return id;
     }
@@ -67,7 +56,6 @@ public class Order {
         this.dateCreated = dateCreated;
     }
 
-    //To string
     @Override
     public String toString() {
         return "Order{" +

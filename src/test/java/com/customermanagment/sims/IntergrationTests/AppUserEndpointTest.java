@@ -1,6 +1,7 @@
-package com.customermanagment.sims.endpointController;
+package com.customermanagment.sims.IntergrationTests;
 
-import com.customermanagment.sims.model.tables.appUser.AppUser;
+import com.customermanagment.sims.controllerEndpoints.AppUserEndpointController;
+import com.customermanagment.sims.model.appUser.AppUser;
 import com.customermanagment.sims.service.appUser.AppUserServiceImplementation;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
@@ -55,7 +56,7 @@ public class AppUserEndpointTest {
         AppUser userToCreate = new AppUser(1, "John Doe", "hallo123");
         when(service.getAppUserById(1)).thenReturn(userToCreate);
         mockMvc.perform(get("/users/1").accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
+                .andExpect(status().isFound())
                 .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.username").value("John Doe"))
                 .andExpect(jsonPath("$.password").value("hallo123"));
@@ -66,19 +67,7 @@ public class AppUserEndpointTest {
         mockMvc.perform(MockMvcRequestBuilders.post("/users/create")
                         .content(asJsonString(new AppUser(123, "Samantha Doe", "password123")))
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    void updateUserById() throws Exception {
-        long id = 123;
-        AppUser user = new AppUser(id, "John Doe", "password123");
-        when(service.getAppUserById(1)).thenReturn(user);
-        AppUser updatedUser = new AppUser(id, "Johnny Doe", "password12345");
-        mockMvc.perform(MockMvcRequestBuilders.put("/users/" + id)
-                        .content(asJsonString(updatedUser))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
     }
 
     @Test
@@ -102,5 +91,17 @@ public class AppUserEndpointTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.*", isA(ArrayList.class))).andExpect(jsonPath("$.*", hasSize(2)));
+    }
+
+    @Test
+    void updateUserById() throws Exception {
+        long id = 123;
+        AppUser user = new AppUser(id, "John Doe", "password123");
+        when(service.getAppUserById(1)).thenReturn(user);
+        AppUser updatedUser = new AppUser(id, "Johnny Doe", "password12345");
+        mockMvc.perform(MockMvcRequestBuilders.put("/users/" + id)
+                        .content(asJsonString(updatedUser))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isAccepted());
     }
 }

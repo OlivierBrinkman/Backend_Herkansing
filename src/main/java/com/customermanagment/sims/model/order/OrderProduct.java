@@ -1,19 +1,10 @@
-package com.customermanagment.sims.model.tables.order;
+package com.customermanagment.sims.model.order;
 import javax.persistence.*;
 
-/**
- * Order_Product Entity
- *
- * @author Olivier Brinkman
- * @version 1.0
- * @since 12/02/2019
- */
-//ENTITY Order_Product
 @Entity
 @Table(name = "ORDER_PRODUCTS")
 public class OrderProduct {
 
-    //Attributes
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID")
@@ -25,7 +16,6 @@ public class OrderProduct {
     @Column(name = "ORDER_ID")
     private long orderId;
 
-    //Constructors
     public OrderProduct(long id, long productId, long orderId) {
         this.id = id;
         this.productId = productId;
@@ -35,7 +25,6 @@ public class OrderProduct {
     public OrderProduct() {
     }
 
-    //Getters and setters
     public long getId() {
         return id;
     }
@@ -60,7 +49,6 @@ public class OrderProduct {
         this.orderId = orderId;
     }
 
-    //TO STRING
     @Override
     public String toString() {
         return "Order_Product{" +

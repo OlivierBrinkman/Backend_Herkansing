@@ -1,6 +1,6 @@
 package com.customermanagment.sims.controller;
-import com.customermanagment.sims.model.tables.product.Brand;
-import com.customermanagment.sims.model.tables.product.Product;
+import com.customermanagment.sims.model.product.Brand;
+import com.customermanagment.sims.model.product.Product;
 import com.customermanagment.sims.repository.product.ProductRepository;
 import com.customermanagment.sims.service.inventory.InventoryServiceImplementation;
 import org.springframework.stereotype.Controller;

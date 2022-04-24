@@ -1,12 +1,10 @@
 package com.customermanagment.sims.service.order;
 
-import com.customermanagment.sims.model.structures.OrderSummaryStructure;
-import com.customermanagment.sims.model.structures.ProductStructure;
-import com.customermanagment.sims.model.tables.customer.Customer;
-import com.customermanagment.sims.model.tables.order.Order;
-import com.customermanagment.sims.model.tables.order.OrderProduct;
-import com.customermanagment.sims.model.tables.product.Brand;
-import com.customermanagment.sims.model.tables.product.Product;
+import com.customermanagment.sims.model.customer.Customer;
+import com.customermanagment.sims.model.order.Order;
+import com.customermanagment.sims.model.order.OrderProduct;
+import com.customermanagment.sims.model.product.Brand;
+import com.customermanagment.sims.model.product.Product;
 import com.customermanagment.sims.repository.customer.CustomerAddressRepository;
 import com.customermanagment.sims.repository.customer.CustomerRepository;
 import com.customermanagment.sims.repository.order.OrderProductRepository;
@@ -14,6 +12,8 @@ import com.customermanagment.sims.repository.order.OrderRepository;
 import com.customermanagment.sims.repository.product.BrandRepository;
 import com.customermanagment.sims.repository.product.ProductRepository;
 import com.customermanagment.sims.service.inventory.InventoryServiceImplementation;
+import com.customermanagment.sims.structures.OrderSummaryStructure;
+import com.customermanagment.sims.structures.ProductStructure;
 import com.customermanagment.sims.utility.Utility;
 import org.springframework.stereotype.Service;
 

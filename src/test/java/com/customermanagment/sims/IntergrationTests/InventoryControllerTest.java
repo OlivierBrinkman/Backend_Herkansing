@@ -1,7 +1,8 @@
-package com.customermanagment.sims.endpointController;
+package com.customermanagment.sims.IntergrationTests;
 
-import com.customermanagment.sims.model.tables.product.Brand;
-import com.customermanagment.sims.model.tables.product.Product;
+import com.customermanagment.sims.controllerEndpoints.InventoryEndpointController;
+import com.customermanagment.sims.model.product.Brand;
+import com.customermanagment.sims.model.product.Product;
 import com.customermanagment.sims.service.inventory.InventoryServiceImplementation;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Assert;

@@ -1,17 +1,10 @@
-package com.customermanagment.sims.model.tables.customer;
+package com.customermanagment.sims.model.customer;
 import javax.persistence.*;
-/**
- * Customer_Address Entity
- *
- * @author Olivier Brinkman
- * @version 1.0
- * @since 12/02/2019
- */
+
 @Entity
 @Table(name = "CUSTOMER_ADDRESS")
 public class CustomerAddress {
 
-    //Attributes
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID")
@@ -35,8 +28,6 @@ public class CustomerAddress {
     @Column(name = "COUNTRY")
     private String country;
 
-
-    //Constructors
     public CustomerAddress(long id, long customerId, String street, String number, String zipcode, String city, String country) {
         this.id = id;
         this.street = street;
@@ -49,7 +40,6 @@ public class CustomerAddress {
 
     public CustomerAddress() {}
 
-    //Getters and Setters
     public long getId() {
         return id;
     }
@@ -106,7 +96,6 @@ public class CustomerAddress {
         this.customerId = customerId;
     }
 
-    //To string
     @Override
     public String toString() {
         return "Customer_Address{" +

@@ -1,6 +1,6 @@
 package com.customermanagment.sims.repository.appUser;
 
-import com.customermanagment.sims.model.tables.appUser.AppUser;
+import com.customermanagment.sims.model.appUser.AppUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

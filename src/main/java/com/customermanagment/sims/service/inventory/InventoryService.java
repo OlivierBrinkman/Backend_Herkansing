@@ -1,7 +1,7 @@
 package com.customermanagment.sims.service.inventory;
 
-import com.customermanagment.sims.model.tables.product.Brand;
-import com.customermanagment.sims.model.tables.product.Product;
+import com.customermanagment.sims.model.product.Brand;
+import com.customermanagment.sims.model.product.Product;
 
 import java.util.List;
 /**

@@ -1,5 +1,5 @@
 package com.customermanagment.sims.repository.customer;
-import com.customermanagment.sims.model.tables.customer.CustomerAddress;
+import com.customermanagment.sims.model.customer.CustomerAddress;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 /**

@@ -1,17 +1,10 @@
-package com.customermanagment.sims.model.tables.appUser;
+package com.customermanagment.sims.model.appUser;
 import javax.persistence.*;
-/**
- * App_User Entity
- *
- * @author Olivier Brinkman
- * @version 1.0
- * @since 12/02/2019
- */
+
 @Entity
 @Table(name = "USERS")
 public class AppUser {
 
-    //Attributes
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "USER_ID")
@@ -23,7 +16,6 @@ public class AppUser {
     @Column(name = "PASSWORD")
     private String password;
 
-    //Constructors
     public AppUser(long id, String username, String password) {
         this.id = id;
         this.username = username;
@@ -33,7 +25,6 @@ public class AppUser {
     public AppUser() {
     }
 
-    //Getters and setters
     public long getId() {
         return id;
     }
@@ -46,10 +37,6 @@ public class AppUser {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -60,7 +47,7 @@ public class AppUser {
 
     @Override
     public String toString() {
-        return "App_User{" +
+        return
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +

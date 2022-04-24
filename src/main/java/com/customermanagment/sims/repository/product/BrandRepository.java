@@ -1,5 +1,5 @@
 package com.customermanagment.sims.repository.product;
-import com.customermanagment.sims.model.tables.product.Brand;
+import com.customermanagment.sims.model.product.Brand;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

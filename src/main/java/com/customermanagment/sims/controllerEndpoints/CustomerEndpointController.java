@@ -1,7 +1,7 @@
-package com.customermanagment.sims.endpointController;
+package com.customermanagment.sims.controllerEndpoints;
 
-import com.customermanagment.sims.model.tables.customer.Customer;
-import com.customermanagment.sims.model.tables.customer.CustomerAddress;
+import com.customermanagment.sims.model.customer.Customer;
+import com.customermanagment.sims.model.customer.CustomerAddress;
 import com.customermanagment.sims.service.customer.CustomerServiceImplementation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

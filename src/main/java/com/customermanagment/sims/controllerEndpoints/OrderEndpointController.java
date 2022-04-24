@@ -1,10 +1,10 @@
-package com.customermanagment.sims.endpointController;
+package com.customermanagment.sims.controllerEndpoints;
 
-import com.customermanagment.sims.model.structures.OrderSummaryStructure;
-import com.customermanagment.sims.model.tables.order.Order;
-import com.customermanagment.sims.model.tables.order.OrderProduct;
-import com.customermanagment.sims.model.tables.product.Product;
+import com.customermanagment.sims.model.order.Order;
+import com.customermanagment.sims.model.order.OrderProduct;
+import com.customermanagment.sims.model.product.Product;
 import com.customermanagment.sims.service.order.OrderServiceImplementation;
+import com.customermanagment.sims.structures.OrderSummaryStructure;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;

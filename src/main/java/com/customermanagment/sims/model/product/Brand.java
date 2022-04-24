@@ -1,18 +1,9 @@
-package com.customermanagment.sims.model.tables.product;
+package com.customermanagment.sims.model.product;
 import javax.persistence.*;
-
-/**
- * Brand Entity
- *
- * @author Olivier Brinkman
- * @version 1.0
- * @since 12/02/2019
- */
 @Entity
 @Table(name = "BRANDS")
 public class Brand {
 
-    //Attributes
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID", columnDefinition = "serial")
@@ -21,7 +12,6 @@ public class Brand {
     @Column(name = "NAME")
     private String name;
 
-    //Constructors
     public Brand(long id, String name) {
         this.id = id;
         this.name = name;
@@ -30,7 +20,6 @@ public class Brand {
     public Brand() {
     }
 
-    //Getters and Setters
     public long getId() {
         return id;
     }
@@ -47,7 +36,6 @@ public class Brand {
         this.name = name;
     }
 
-    //To string
     @Override
     public String toString() {
         return "Brand{" +
@@ -55,7 +43,4 @@ public class Brand {
                 ", name='" + name + '\'' +
                 '}';
     }
-
-
-
 }
