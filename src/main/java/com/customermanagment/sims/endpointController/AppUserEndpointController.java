@@ -26,25 +26,25 @@ public class AppUserEndpointController {
     }
 
     @GetMapping("/users/{id}")
-    public AppUser getUserById(@PathVariable long id) {
-        return service.getAppUserById(id);
+    public ResponseEntity<AppUser> getUserById(@PathVariable long id) {
+        return new ResponseEntity<>(service.getAppUserById(id), HttpStatus.FOUND);
     }
 
     @PostMapping("/users/create")
-    public long createUser(@RequestBody AppUser appUser) {
-        return service.createAppUser(appUser);
+    public ResponseEntity<Long> createUser(@RequestBody AppUser appUser) {
+        return new ResponseEntity<>(service.createAppUser(appUser), HttpStatus.CREATED);
     }
 
     @PutMapping("/users/{id}")
-    public long updateUserById(@RequestBody AppUser appUser, @PathVariable long id) {
+    public ResponseEntity<Long> updateUserById(@RequestBody AppUser appUser, @PathVariable long id) {
         appUser.setId(id);
-        return service.createAppUser(appUser);
+        return new ResponseEntity<>(service.createAppUser(appUser), HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("/users/{id}")
-    public String deleteUserById(@PathVariable long id) {
+    public ResponseEntity<String> deleteUserById(@PathVariable long id) {
         service.deleteAppUser(id);
-        return "User has been deleted";
+        return new ResponseEntity<>("User has been deleted", HttpStatus.OK);
     }
 
 }

@@ -110,11 +110,6 @@ public class OrderServiceImplementation implements OrderService {
         return products;
     }
 
-    /**
-     * get product summary by product id
-     * @param productId
-     * @return
-     */
     @Override
     public ProductStructure getProductSummary(long productId) {
         Product product = inventoryService.getProductById(productId);
@@ -132,12 +127,6 @@ public class OrderServiceImplementation implements OrderService {
         return productSummary;
     }
 
-    /**
-     * get products by order id for order summary
-     *
-     * @param orderId
-     * @return
-     */
     @Override
     public List<ProductStructure> getProductsForSummary(long orderId) {
         List<ProductStructure> productSummaries = new ArrayList<>();
@@ -158,13 +147,6 @@ public class OrderServiceImplementation implements OrderService {
         return productSummaries;
     }
 
-    /**
-     * get structure for order summary
-     *
-     * @param orderId
-     * @return
-     * @throws Exception
-     */
     @Override
     public OrderSummaryStructure getSummaryStructure(long orderId) {
         NumberFormat formatter = new DecimalFormat("#0.00");
@@ -187,10 +169,6 @@ public class OrderServiceImplementation implements OrderService {
         return "Orders are deleted";
     }
 
-    /**
-     * inserts dummy orders
-     * @throws Exception
-     */
     @Override
     public void insertOrders() throws Exception {
         List<Customer> customers = customerRepository.findAll();

@@ -5,6 +5,8 @@ import com.customermanagment.sims.model.tables.order.Order;
 import com.customermanagment.sims.model.tables.order.OrderProduct;
 import com.customermanagment.sims.model.tables.product.Product;
 import com.customermanagment.sims.service.order.OrderServiceImplementation;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,58 +23,57 @@ public class OrderEndpointController {
     }
 
     @GetMapping("/orders/all")
-    public List<Order> getAllOrders() {
-        return service.getOrders();
+    public ResponseEntity<List> getAllOrders() {
+        return new ResponseEntity<>(service.getOrders(), HttpStatus.OK);
     }
 
     @GetMapping("/orders/{id}")
-    public OrderSummaryStructure getOrderDetails(@PathVariable long id) {
-        return service.getSummaryStructure(id);
+    public ResponseEntity<OrderSummaryStructure> getOrderDetails(@PathVariable long id) {
+        return new ResponseEntity<>(service.getSummaryStructure(id), HttpStatus.OK);
     }
 
     @PostMapping("/orders/create")
-    public long createOrder(@RequestBody Order order) {
-        return service.createOrder(order);
+    public ResponseEntity<Long> createOrder(@RequestBody Order order) {
+        return new ResponseEntity<>(service.createOrder(order), HttpStatus.CREATED);
     }
 
     @PutMapping("/orders/{id}")
-    public Order updateOrder(@RequestBody Order order, @PathVariable long id) {
+    public ResponseEntity<Long> updateOrder(@RequestBody Order order, @PathVariable long id) {
         order.setId(id);
-        Order updatedOrder = service.getOrderById(service.createOrder(order));
-        return updatedOrder;
+        return new ResponseEntity<>(service.createOrder(order), HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("/orders/{id}")
-    public String deleteOrder(@PathVariable long id) {
+    public ResponseEntity<String> deleteOrder(@PathVariable long id) {
         service.deleteOrderProductsByOrderId(id);
-        return "Order and associated items have been removed";
+        return new ResponseEntity<>("Order and associated items have been removed", HttpStatus.OK);
     }
 
     @GetMapping("/orders/{id}/products")
-    public List<Product> getProductsByOrderId(@PathVariable long id) {
-        return service.getProductsByOrderId(id);
+    public ResponseEntity<List> getProductsByOrderId(@PathVariable long id) {
+        return new ResponseEntity<>(service.getProductsByOrderId(id), HttpStatus.FOUND);
     }
 
     @GetMapping("/orders/{id}/price")
-    public int getTotalPriceOrderById(@PathVariable long id) {
+    public ResponseEntity<Integer> getTotalPriceOrderById(@PathVariable long id) {
         int totalOrderPrice = 0;
         List<Product> orderProducts = service.getProductsByOrderId(id);
         for (Product product : orderProducts) {
             totalOrderPrice = totalOrderPrice + product.getPrice();
         }
-        return totalOrderPrice;
+        return new ResponseEntity<>(totalOrderPrice, HttpStatus.OK);
     }
 
     @PostMapping("/orders/{id}/add/{productId}")
-    public long addProductToOrder(@PathVariable long id, @PathVariable long productId) {
+    public ResponseEntity<Long> addProductToOrder(@PathVariable long id, @PathVariable long productId) {
         OrderProduct productToAdd = new OrderProduct(service.getProductsByOrderId(id).size(), productId, id);
-        return service.createOrderProduct(productToAdd);
+        return new ResponseEntity<>(service.createOrderProduct(productToAdd), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/orders/items/{orderProductId}")
-    public String deleteOrderProductFromOrder(@PathVariable long orderProductId) {
+    public ResponseEntity<String> deleteOrderProductFromOrder(@PathVariable long orderProductId) {
         service.deleteProductByOrderId(orderProductId);
-        return "Product have been removed from the order.";
+        return new ResponseEntity<>("Product have been removed from the order.", HttpStatus.OK);
     }
 
 }

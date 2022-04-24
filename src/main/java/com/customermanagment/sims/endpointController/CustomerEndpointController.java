@@ -51,14 +51,14 @@ public class CustomerEndpointController {
         return "Customer have been removed";
     }
 
-    @GetMapping("/customers/{id}/address}")
+    @GetMapping("/customers/{id}/address")
     public ResponseEntity<CustomerAddress> getAddressByCustomerId(@PathVariable long id) {
         return new ResponseEntity<>(service.getCustomerAddressByCustomerId(id), HttpStatus.FOUND);
     }
 
-    @PostMapping("/customers/{id}/address/create}")
+    @PostMapping("/customers/{id}/address/create")
     public ResponseEntity<CustomerAddress> createCustomerAddressById(@RequestBody CustomerAddress customerAddress) {
-        return new ResponseEntity<>(service.getCustomerAddressByCustomerId(service.getCustomerById(service.createCustomerAddress(customerAddress)).getId()), HttpStatus.CREATED);
+        return new ResponseEntity<>(service.getCustomerAddressByCustomerId(customerAddress.getCustomerId()), HttpStatus.CREATED);
     }
 
     @PutMapping("/customers/{id}/address")

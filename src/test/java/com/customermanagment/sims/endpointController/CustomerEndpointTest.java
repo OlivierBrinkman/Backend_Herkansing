@@ -1,6 +1,7 @@
 package com.customermanagment.sims.endpointController;
 
 import com.customermanagment.sims.model.tables.customer.Customer;
+import com.customermanagment.sims.model.tables.customer.CustomerAddress;
 import com.customermanagment.sims.service.customer.CustomerServiceImplementation;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Assert;
@@ -80,7 +81,6 @@ public class CustomerEndpointTest {
                 .andExpect(jsonPath("$.phone").value("0652147787"))
                 .andReturn();
         Assert.assertNotNull(result.getResponse());
-
     }
 
     @Test
@@ -107,29 +107,44 @@ public class CustomerEndpointTest {
 
     @Test
     public void deleteCustomerById() throws Exception {
-        long id = 123;
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.delete("/customers/" + 123)
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.delete("/customers/" + 123))
                 .andExpect(status().isOk())
                 .andReturn();
+        Assert.assertEquals("Customer have been removed", result.getResponse().getContentAsString());
     }
 
     @Test
     public void getAddressByCustomerId() throws Exception {
 
+        CustomerAddress address = new CustomerAddress(1, 123, "Lijnbaansgracht", "247", "1017Rl", "Amsterdam", "Netherlands");
+        when(service.getCustomerAddressByCustomerId(123)).thenReturn(address);
+        MvcResult result = mockMvc.perform(get("/customers/123/address/").accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isFound())
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.customerId").value(123))
+                .andExpect(jsonPath("$.street").value("Lijnbaansgracht"))
+                .andExpect(jsonPath("$.zipcode").value("1017Rl"))
+                .andExpect(jsonPath("$.city").value("Amsterdam"))
+                .andExpect(jsonPath("$.country").value("Netherlands"))
+                .andReturn();
+        Assert.assertNotNull(result.getResponse());
     }
 
     @Test
     public void createCustomerAddressById() throws Exception {
-
-    }
-
-    @Test
-    public void updateCustomerAddressById() throws Exception {
-
+        CustomerAddress address = new CustomerAddress(1, 123, "Lijnbaansgracht", "247", "1017Rl", "Amsterdam", "Netherlands");
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/customers/123/address/create")
+                        .content(asJsonString(address))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated()).andReturn();
+        Assert.assertNotNull(result.getResponse());
     }
 
     @Test
     public void deleteCustomerAddressById() throws Exception {
-
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.delete("/customers/address/" + 123))
+                .andExpect(status().isOk())
+                .andReturn();
+        Assert.assertEquals("Customer Address have been removed", result.getResponse().getContentAsString());
     }
 }

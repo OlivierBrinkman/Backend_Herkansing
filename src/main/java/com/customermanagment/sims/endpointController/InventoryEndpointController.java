@@ -3,6 +3,8 @@ package com.customermanagment.sims.endpointController;
 import com.customermanagment.sims.model.tables.product.Brand;
 import com.customermanagment.sims.model.tables.product.Product;
 import com.customermanagment.sims.service.inventory.InventoryServiceImplementation;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,70 +14,62 @@ import java.util.List;
 @RestController
 public class InventoryEndpointController {
 
-    //Service initialization
     private final InventoryServiceImplementation service;
 
-    //Constructor
     public InventoryEndpointController(InventoryServiceImplementation service) {
         this.service = service;
     }
 
-    //Brand Endpoints
-    @GetMapping("/brands")
-    public List<Brand> getAllBrands() {
-        return service.getBrands();
+    @GetMapping("/brands/all")
+    public ResponseEntity<List> getAllBrands() {
+        return new ResponseEntity<>(service.getBrands(), HttpStatus.OK);
     }
 
     @GetMapping("/brands/{id}")
-    public Brand getBrandById(@PathVariable long id) {
-        return service.getBrandById(id);
+    public ResponseEntity<Brand> getBrandById(@PathVariable long id) {
+        return new ResponseEntity<>(service.getBrandById(id), HttpStatus.FOUND);
     }
 
-    @PostMapping("/brands")
-    public long createBrand(@RequestBody Brand brand) {
-        return service.createBrand(brand);
+    @PostMapping("/brands/create")
+    public ResponseEntity<Long> createBrand(@RequestBody Brand brand) {
+        return new ResponseEntity<>(service.createBrand(brand), HttpStatus.CREATED);
     }
 
     @PutMapping("/brands/{id}")
-    public Brand updateBrandById(@RequestBody Brand brand, @PathVariable long id) {
+    public ResponseEntity<Long> updateBrandById(@RequestBody Brand brand, @PathVariable long id) {
         brand.setId(id);
-        service.deleteBrand(id);
-        Brand updatedBrand = service.getBrandById(service.createBrand(brand));
-        return updatedBrand;
+        return new ResponseEntity<>(service.createBrand(brand), HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("/brands/{id}")
-    public String deleteBrandById(@PathVariable long id) {
+    public ResponseEntity<String> deleteBrandById(@PathVariable long id) {
         List<Product> products = service.getProductsByBrandId(id);
         for (Product product : products) {
             service.deleteProduct(product.getId());
         }
         service.deleteBrand(id);
-        return "Brand and associated products have been removed";
+        return new ResponseEntity<>("Brand and associated products have been removed", HttpStatus.OK);
     }
 
-    //Product Endpoints
-    @GetMapping("/brands/{id}/products/")
-    public List<Product> getProductsByBrandId(@PathVariable long brandId) {
-        return service.getProductsByBrandId(brandId);
+    @GetMapping("/brands/{id}/products")
+    public ResponseEntity<List> getProductsByBrandId(@PathVariable long id) {
+        return new ResponseEntity<>(service.getProductsByBrandId(id), HttpStatus.FOUND);
     }
 
-    @PostMapping("/brands/{id}/products/")
-    public long createProduct(@RequestBody Product product) {
-        return service.createProduct(product);
+    @PostMapping("/brands/{id}/products")
+    public ResponseEntity<Long> createProduct(@RequestBody Product product) {
+        return new ResponseEntity<>(service.createProduct(product), HttpStatus.CREATED);
     }
 
     @PutMapping("/brands/{id}/products/{productId}")
-    public Product updateProductById(@RequestBody Product product, @PathVariable long productId, @PathVariable long id) {
+    public ResponseEntity<Long> updateProductById(@RequestBody Product product, @PathVariable long productId, @PathVariable long id) {
         product.setId(productId);
-        Product updatedProduct = service.getProductById(service.createProduct(product));
-        return updatedProduct;
+        return new ResponseEntity<>(service.createProduct(product), HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("/brands/{id}/products/{productId}")
-    public String deleteProductById(@PathVariable long id, @PathVariable long productId) {
+    public ResponseEntity<String> deleteProductById(@PathVariable long id, @PathVariable long productId) {
         service.deleteProduct(id);
-        return "Product have been removed";
+        return new ResponseEntity<>("Product have been removed", HttpStatus.OK);
     }
-
 }
